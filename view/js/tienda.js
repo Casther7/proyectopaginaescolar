@@ -23,7 +23,13 @@ function cerrarModal() {
 
 // 3. Funciones del Carrito Lateral
 function toggleCarrito() {
-    document.getElementById('carrito-lateral').classList.toggle('activo');
+    const elementoCarrito = document.getElementById('carrito-lateral');
+    if (elementoCarrito) {
+        elementoCarrito.classList.toggle('active');
+        console.log("Clase active aplicada:", elementoCarrito.classList.contains('active'));
+    } else {
+        console.error("No se encontró el ID 'carrito-lateral'");
+    }
 }
 
 function agregarAlCarrito() {
@@ -96,10 +102,13 @@ function eliminarDelCarrito(index) {
     actualizarInterfazCarrito();
 }
 
-// 4. Cerrar modal o carrito si hacen clic fuera
-window.onclick = function(event) {
+// 4. Cerrar modal o carrito de forma segura sin sobrescribir otras funciones
+window.addEventListener('click', function(event) {
     const modal = document.getElementById('modalProducto');
+    const carrito = document.getElementById('carrito-lateral');
+    
+    // Si el usuario hace clic en el fondo oscuro del modal, se cierra
     if (event.target == modal) {
         cerrarModal();
     }
-}
+});

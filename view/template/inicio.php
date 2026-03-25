@@ -81,3 +81,18 @@
         </form>
     </div>
 </section>
+
+<div id="modalAdmin" class="modal-oculto">
+    <div class="modal-contenido">
+        <span class="cerrar-modal" onclick="cerrarModalAdmin()">&times;</span>
+        
+        <h3 style="color: #1a365d; margin-bottom: 15px;">Acceso Administrador</h3>
+        <p style="font-size: 0.9rem; margin-bottom: 20px;">Ingresa para entrar al panel</p>
+        
+        <form action="index.php?ruta=procesar-login" method="POST">
+            <input type="text" name="usuario" placeholder="Usuario" required class="input-modal">
+            <input type="password" name="password" placeholder="Contraseña" required class="input-modal">
+            <button type="submit" class="btn-main" style="width: 100%; margin-top: 10px; cursor:pointer;">Entrar a Configurar</button>
+        </form>
+    </div>
+</div>

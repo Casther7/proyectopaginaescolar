@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- RESET Y VARIABLES --- */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+:root {
+    /* Paleta Institucional */
+    --azul-escuela: #0e1b38;      
+    --rojo-escuela: #e53e3e;      
+    --azul-acento: #3b82f6;      
+    
+    /* Panel neutral */
+    --gris-fondo: #f4f7f9;
+    --gris-borde: #e2e8f0;
+    --texto-oscuro: #1e293b;
+    --texto-gris: #64748b;
+    --blanco-puro: #ffffff;
+}
+
+body { background-color: var(--gris-fondo); color: var(--texto-oscuro); display: flex; height: 100vh; overflow: hidden; }
+
+/* ==========================================================================
+   SIDEBAR CLARA Y ELEGANTE (Sin barra de scroll)
+   ========================================================================== */
+
+.sidebar { 
+    width: 100px; 
+    background-color: var(--blanco-puro); 
+    display: flex; 
+    flex-direction: column; 
+    border-right: 1px solid var(--gris-borde);
+    z-index: 100;
+}
+
+.sidebar-logo { 
+    padding: 20px 0; 
+    text-align: center;
+    border-bottom: 1px solid var(--gris-borde); 
+    margin-bottom: 10px;
+}
+
+.sidebar-logo .logo-icon { font-size: 2rem; margin-bottom: 5px; }
+.sidebar-logo .logo-text { font-size: 0.75rem; font-weight: 700; color: var(--azul-escuela); }
+
+/* Contenedor del menú con SCROLL OCULTO */
+.sidebar-menu { 
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    gap: 8px; 
+    padding: 15px 10px;
+    overflow-y: auto; 
+    /* Ocultar barra de scroll en Firefox y navegadores webkit */
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+}
+.sidebar-menu::-webkit-scrollbar { 
+    display: none; 
+}
+
+/* Items del menú: Icono arriba, texto abajo */
+.menu-item { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    padding: 12px 5px; 
+    color: var(--texto-gris); 
+    text-decoration: none; 
+    transition: all 0.2s ease-in-out; 
+    border-radius: 10px;
+    gap: 6px;
+    position: relative;
+    border: 1px solid transparent;
+}
+
+.menu-item .icon { 
+    font-size: 1.4rem; 
+    transition: transform 0.2s;
+    filter: grayscale(100%) opacity(0.7); /* Iconos más discretos por defecto */
+}
+
+.menu-item .text {
+    font-size: 0.65rem;
+    font-weight: 600;
+}
+
+/* EFECTO HOVER: Color e iluminación suave */
+.menu-item:hover { 
+    background-color: #eff6ff; /* Azul muy clarito */
+    color: var(--azul-acento); 
+}
+
+.menu-item:hover .icon {
+    transform: translateY(-3px); 
+    filter: grayscale(0%) opacity(1); /* Devuelve el color al emoji */
+}
+
+/* EFECTO ACTIVO: Botón seleccionado */
+.menu-item.active { 
+    background-color: #eff6ff; 
+    color: var(--azul-escuela); 
+    border: 1px solid #bfdbfe;
+}
+
+.menu-item.active .icon {
+    filter: grayscale(0%) opacity(1);
+}
+
+/* Línea indicadora izquierda */
+.menu-item.active::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 20%;
+    height: 60%;
+    width: 4px;
+    background-color: var(--azul-escuela);
+    border-radius: 0 4px 4px 0;
+}
+
+.sidebar-footer { 
+    padding: 15px 10px; 
+    border-top: 1px solid var(--gris-borde); 
+}
+
+/* Botón de Salir */
+.btn-salir { color: var(--texto-gris); }
+.btn-salir:hover {
+    background-color: #fef2f2;
+    color: var(--rojo-escuela);
+    border-color: #fecaca;
+}
+.btn-salir:hover .icon { filter: grayscale(0%) opacity(1); }
+
+/* ==========================================================================
+   MAIN CONTENT (Tarjetas y Cabecera)
+   ========================================================================== */
+
+.main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+
+.top-header { background-color: var(--blanco-puro); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gris-borde); }
+.breadcrumb { color: var(--texto-gris); font-size: 0.95rem; }
+.breadcrumb .destacado { color: var(--azul-escuela); font-weight: 600; }
+.user-profile { display: flex; align-items: center; gap: 15px; font-weight: 600; color: var(--azul-escuela); }
+.avatar { width: 42px; height: 42px; background-color: var(--azul-escuela); color: var(--blanco-puro); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; font-weight: 700; }
+.btn-salir-header { background-color: var(--rojo-escuela); color: var(--blanco-puro); padding: 8px 15px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: 0.3s; }
+.btn-salir-header:hover { background-color: #c53030; }
+
+.dashboard-content { padding: 40px; }
+.page-title { font-size: 2rem; margin-bottom: 35px; color: var(--azul-escuela); font-weight: 700; letter-spacing: -0.5px; }
+
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+
+.card { background: var(--blanco-puro); border-radius: 12px; padding: 30px; display: flex; align-items: center; gap: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); border: 1px solid var(--gris-borde); transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; }
+.card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.06); }
+
+.card-circle-icon { width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; background: var(--gris-fondo); transition: transform 0.3s; flex-shrink: 0; }
+.card:hover .card-circle-icon { transform: scale(1.05); }
+
+.card-accent-blue .card-circle-icon { background: #eff6ff; border: 3px solid #bfdbfe; color: var(--azul-escuela); }
+.icon-red { background: #fff5f5; border: 3px solid #fecaca; color: var(--rojo-escuela); }
+.icon-yellow { background: #fefce8; border: 3px solid #fef08a; }
+.icon-green { background: #f0fdf4; border: 3px solid #bbf7d0; }
+
+.card-text-content { flex: 1; }
+.card-text-content h3 { font-size: 1.25rem; margin-bottom: 8px; color: var(--texto-oscuro); font-weight: 600; }
+.card-text-content p { color: var(--texto-gris); font-size: 0.9rem; margin-bottom: 18px; line-height: 1.5; }
+
+.card-action-btn { display: inline-block; padding: 10px 22px; background-color: var(--azul-escuela); color: var(--blanco-puro); text-decoration: none; border-radius: 8px; font-weight: 600; transition: 0.2s; font-size: 0.9rem; border: none; cursor: pointer; }
+.card-action-btn:hover { background-color: #1e293b; }
+
+.btn-red { background-color: var(--rojo-escuela); }
+.btn-red:hover { background-color: #dc2626; }
+
+.card-btn-text { color: var(--azul-escuela); font-weight: 600; text-decoration: none; font-size: 0.9rem; }
+.card-btn-text:hover { text-decoration: underline; }
