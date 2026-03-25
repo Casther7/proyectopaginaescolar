@@ -1,0 +1,236 @@
+/* Estilos base de la tienda */
+.tienda-contenedor {
+    padding: 40px 5%;
+    background-color: #f9f9f9;
+}
+.tienda-grid {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 600px;
+}
+.tarjeta-tienda.horizontal {
+    flex: 1; /* Ocupa la mitad superior del mosaico derecho */
+    height: 280px; /* Forzamos una altura fija para este bloque */
+    overflow: hidden;
+}
+.tarjeta-tienda.horizontal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /*Recorta la imagen para llenar el espacio sin estirarse */
+    object-position: center 20%; /* Enfoca la parte superior/pecho de la sudadera */
+}
+.fila-inferior {
+    display: flex;
+    gap: 20px;
+    height: 300px; /* Altura para los dos cuadros de abajo */
+}
+.producto-principal { 
+    flex: 1;
+    cursor: pointer; 
+}
+
+.producto-mosaico {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column; 
+    gap: 20px; 
+}
+
+.fila-inferior {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+}
+
+.tarjeta-tienda {
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 8px;
+    height: 100%;
+    cursor: pointer;
+}
+.tarjeta-tienda img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+}
+.tarjeta-tienda:hover img {
+    transform: scale(1.05);
+}
+.info-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(transparent, rgba(255,255,255,0.95) 60%);
+}
+.btn-ver {
+    font-size: 0.8rem;
+    text-decoration: underline;
+    color: #0a192f;
+    font-weight: bold;
+}
+
+/* ESTILOS DEL MODAL*/
+.modal-fondo {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(5px);
+}
+.modal-contenido {
+    background: #fff;
+    margin: 5% auto;
+    width: 70%;
+    max-width: 800px;
+    border-radius: 12px;
+    position: relative;
+    animation: slideDown 0.3s ease;
+}
+@keyframes slideDown { 
+    from { 
+        transform: translateY(-50px); 
+        opacity: 0; 
+    } 
+    to { transform: translateY(0); opacity: 1; } 
+}
+.cerrar-modal {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #333;
+    z-index: 1;
+}
+.modal-flex {
+    display: flex;
+}
+.modal-imagen {
+    flex: 1;
+    max-height: 500px;
+}
+.modal-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px 0 0 12px;
+}
+.modal-info {
+    flex: 1;
+    padding: 40px;
+}
+.modal-precio {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0a192f;
+    margin: 10px 0;
+}
+.modal-descripcion {
+    color: #666;
+    line-height: 1.6;
+    margin: 20px 0;
+}
+.opciones-compra {
+    margin-top: 30px;
+}
+.opciones-compra input {
+    padding: 10px;
+    width: 60px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.btn-comprar {
+    padding: 12px 25px;
+    background: #0a192f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-comprar:hover {
+    background: #d9534f;
+} /* Cambio a un tono rojo/alerta suave como tu botón de tienda */
+
+@media (max-width: 768px) {
+    .tienda-grid {
+        flex-direction: column;
+        height: auto;
+    }
+    .modal-flex {
+        flex-direction: column;
+    }
+    .modal-contenido {
+        width: 90%;
+        margin: 10% auto;
+    }
+.modal-imagen {
+    height: 250px;
+}
+.modal-imagen img {
+    border-radius: 12px 12px 0 0;
+}
+}
+
+/* Estilos para el Carrito Lateral */
+.carrito-sidebar {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 350px;
+    height: 100%;
+    background: white;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    z-index: 5000;
+    transition: 0.4s;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+ }
+
+.carrito-sidebar.active {
+    right: 0 !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+.carrito-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+ }
+.carrito-cuerpo {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 0;
+ }
+.item-carrito {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    align-items: center;
+    font-size: 0.9rem;
+ }
+.btn-pagar{
+    width: 100%;
+    padding: 12px;
+    background: #0a192f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
