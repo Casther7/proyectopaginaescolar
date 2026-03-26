@@ -2,7 +2,7 @@
 :root {
     --primario: #1a365d;
     --secundario: #e53e3e;
-    --fondo-claro: #f7fafc;
+    --fondo-claro: #F2F2F2;
     --texto: #2d3748;
 }
 
@@ -46,13 +46,13 @@ body { color: var(--texto); }
 
 /* Botón de Tienda destacado en el menú */
 .btn-venta {
-    background-color: var(--secundario);
+    background-color: #B25B42;
     color: white !important;
     padding: 10px 20px;
     border-radius: 25px;
-    box-shadow: 0 4px 6px rgba(229, 62, 62, 0.3);
+    box-shadow: 0 4px 6px rgba(210, 8, 8, 0.3);
 }
-.btn-venta:hover { background-color: #c53030; transform: translateY(-2px); }
+.btn-venta:hover { background-color: #B25B42; transform: translateY(-2px); }
 
 /* --- SECCIONES GLOBALES --- */
 section { padding: 100px 50px 60px; min-height: 80vh; }
@@ -63,17 +63,17 @@ section { padding: 100px 50px 60px; min-height: 80vh; }
 
 /* --- HERO (Inicio) --- */
 .hero {
-    background: linear-gradient(rgba(26, 54, 93, 0.8), rgba(26, 54, 93, 0.8)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200') center/cover;
+    background: linear-gradient(rgba(242, 242, 242, 0.9), rgba(215, 215, 210, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200') center/cover;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: white;
+    color: #121212;
 }
 .hero h1 { font-size: 3.5rem; margin-bottom: 20px; }
 .hero p { font-size: 1.2rem; margin-bottom: 30px; }
-.btn-main { background: var(--secundario); color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; font-size: 1.1rem; border: none; cursor: pointer; }
+.btn-main { background: #B25B42; color: rgb(54, 32, 32); padding: 15px 30px; border-radius: 30px; text-decoration: none; font-size: 1.1rem; border: none; cursor: pointer; }
 
 /* --- GRIDS Y TARJETAS --- */
 .contenedor-grid {
@@ -85,7 +85,7 @@ section { padding: 100px 50px 60px; min-height: 80vh; }
 }
 
 .tarjeta-info, .tarjeta-curso, .tarjeta-perfil {
-    background: white;
+    background: rgb(241, 239, 239);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);

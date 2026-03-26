@@ -2,13 +2,32 @@
 let carrito = [];
 
 // 2. Funciones del Modal de Detalles
-function abrirModal(titulo, precio, desc, imagen) {
+function abrirModal(titulo, precio, desc, imagen, tieneTalla) {
+    
     const modal = document.getElementById('modalProducto');
     
     document.getElementById('tituloModal').innerText = titulo;
     document.getElementById('precioModal').innerText = precio;
     document.getElementById('descModal').innerText = desc;
     document.getElementById('imgModal').src = imagen;
+
+const contenedorTalla = document.getElementById('contenedorTalla');
+
+    if (contenedorTalla) {
+    if (tieneTalla) {
+        contenedorTalla.style.display = 'block';
+    } else {
+        contenedorTalla.style.display = 'none';
+    }
+
+    // Resetear selección
+    const inputTalla = document.getElementById('tallaSeleccionada');
+    if (inputTalla) inputTalla.value = '';
+
+    document.querySelectorAll('.talla-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+}
 
     // SOLUCIÓN DILEMA 1: Resetear el input de cantidad a 1 siempre que se abra el modal
     const inputCant = document.querySelector('#modalProducto input[type="number"]');
@@ -22,7 +41,9 @@ function cerrarModal() {
 }
 
 // 3. Funciones del Carrito Lateral
-function toggleCarrito() {
+function toggleCarrito(event) {
+    if (event) event.stopPropagation(); // Evita que el clic llegue a la ventana 'window'
+    
     const elementoCarrito = document.getElementById('carrito-lateral');
     if (elementoCarrito) {
         elementoCarrito.classList.toggle('active');
@@ -41,6 +62,15 @@ function agregarAlCarrito() {
     
     // SOLUCIÓN DILEMA 2: Obtener la cantidad real del input
     const cantidad = parseInt(document.querySelector('#modalProducto input[type="number"]').value) || 1;
+
+    const talla = document.getElementById('tallaSeleccionada')?.value;
+
+const contenedorTalla = document.getElementById('contenedorTalla');
+
+if (contenedorTalla && contenedorTalla.style.display !== 'none' && !talla) {
+    alert("Selecciona una talla");
+    return;
+}
 
     // Buscamos si el producto ya existe para no duplicar filas
     const indiceExistente = carrito.findIndex(prod => prod.titulo === titulo);
@@ -102,13 +132,57 @@ function eliminarDelCarrito(index) {
     actualizarInterfazCarrito();
 }
 
-// 4. Cerrar modal o carrito de forma segura sin sobrescribir otras funciones
+// 4. Cerrar modal o carrito de forma segura
 window.addEventListener('click', function(event) {
     const modal = document.getElementById('modalProducto');
     const carrito = document.getElementById('carrito-lateral');
     
-    // Si el usuario hace clic en el fondo oscuro del modal, se cierra
+    // Cerrar modal si se hace clic fuera del contenido
     if (event.target == modal) {
         cerrarModal();
     }
+    
+    // Cerrar carrito si se hace clic fuera de él mientras está activo
+    if (carrito && carrito.classList.contains('active') && !carrito.contains(event.target)) {
+        // Solo cerramos si el clic NO fue en el botón que lo abre (para evitar conflicto)
+        if (!event.target.closest('.icono-carrito') && !event.target.closest('#carrito-lateral')) {
+            carrito.classList.remove('active');
+        }
+    }
 });
+
+// =========================
+// FUNCIONES DE PAGO
+// =========================
+
+let metodoPago = "";
+
+// Abrir modal
+function abrirModalPago() {
+    document.getElementById('modalPago').style.display = 'block';
+}
+
+// Cerrar modal
+function cerrarModalPago() {
+    document.getElementById('modalPago').style.display = 'none';
+}
+
+// Seleccionar método
+function seleccionarPago(metodo) {
+    metodoPago = metodo;
+    document.getElementById('metodoSeleccionado').innerText = "Seleccionado: " + metodo;
+}
+
+// Confirmar compra
+function confirmarCompra() {
+    if (!metodoPago) {
+        alert("Selecciona un método de pago");
+        return;
+    }
+
+    alert("Compra realizada con " + metodoPago);
+
+    carrito = [];
+    actualizarInterfazCarrito();
+    cerrarModalPago();
+}

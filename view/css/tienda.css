@@ -1,8 +1,11 @@
-/* Estilos base de la tienda */
+/* =========================================
+   1. ESTILOS BASE DE LA TIENDA
+   ========================================= */
 .tienda-contenedor {
     padding: 40px 5%;
     background-color: #f9f9f9;
 }
+
 .tienda-grid {
     display: flex;
     gap: 20px;
@@ -10,22 +13,7 @@
     margin: 0 auto;
     height: 600px;
 }
-.tarjeta-tienda.horizontal {
-    flex: 1; /* Ocupa la mitad superior del mosaico derecho */
-    height: 280px; /* Forzamos una altura fija para este bloque */
-    overflow: hidden;
-}
-.tarjeta-tienda.horizontal img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /*Recorta la imagen para llenar el espacio sin estirarse */
-    object-position: center 20%; /* Enfoca la parte superior/pecho de la sudadera */
-}
-.fila-inferior {
-    display: flex;
-    gap: 20px;
-    height: 300px; /* Altura para los dos cuadros de abajo */
-}
+
 .producto-principal { 
     flex: 1;
     cursor: pointer; 
@@ -42,6 +30,7 @@
     display: flex;
     gap: 20px;
     flex: 1;
+    height: 300px;
 }
 
 .tarjeta-tienda {
@@ -52,15 +41,28 @@
     height: 100%;
     cursor: pointer;
 }
+
 .tarjeta-tienda img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s;
 }
+
+.tarjeta-tienda.horizontal {
+    flex: 1;
+    height: 280px;
+    overflow: hidden;
+}
+
+.tarjeta-tienda.horizontal img {
+    object-position: center 20%;
+}
+
 .tarjeta-tienda:hover img {
     transform: scale(1.05);
 }
+
 .info-overlay {
     position: absolute;
     bottom: 0;
@@ -69,6 +71,7 @@
     padding: 20px;
     background: linear-gradient(transparent, rgba(255,255,255,0.95) 60%);
 }
+
 .btn-ver {
     font-size: 0.8rem;
     text-decoration: underline;
@@ -76,7 +79,9 @@
     font-weight: bold;
 }
 
-/* ESTILOS DEL MODAL*/
+/* =========================================
+   2. ESTILOS DEL MODAL (PRODUCTOS)
+   ========================================= */
 .modal-fondo {
     display: none;
     position: fixed;
@@ -88,6 +93,7 @@
     background: rgba(0,0,0,0.7);
     backdrop-filter: blur(5px);
 }
+
 .modal-contenido {
     background: #fff;
     margin: 5% auto;
@@ -97,13 +103,12 @@
     position: relative;
     animation: slideDown 0.3s ease;
 }
+
 @keyframes slideDown { 
-    from { 
-        transform: translateY(-50px); 
-        opacity: 0; 
-    } 
+    from { transform: translateY(-50px); opacity: 0; } 
     to { transform: translateY(0); opacity: 1; } 
 }
+
 .cerrar-modal {
     position: absolute;
     right: 20px;
@@ -113,119 +118,92 @@
     color: #333;
     z-index: 1;
 }
+
 .modal-flex {
     display: flex;
 }
+
 .modal-imagen {
     flex: 1;
     max-height: 500px;
 }
+
 .modal-imagen img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 12px 0 0 12px;
 }
+
 .modal-info {
     flex: 1;
     padding: 40px;
 }
+
 .modal-precio {
     font-size: 1.5rem;
     font-weight: bold;
     color: #0a192f;
     margin: 10px 0;
 }
-.modal-descripcion {
-    color: #666;
-    line-height: 1.6;
-    margin: 20px 0;
-}
-.opciones-compra {
-    margin-top: 30px;
-}
-.opciones-compra input {
-    padding: 10px;
-    width: 60px;
-    margin-right: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+
 .btn-comprar {
-    padding: 12px 25px;
+    width: 100%;
+    padding: 12px;
     background: #0a192f;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     transition: 0.3s;
+    font-weight: bold;
 }
+
 .btn-comprar:hover {
     background: #d9534f;
-} /* Cambio a un tono rojo/alerta suave como tu botón de tienda */
-
-@media (max-width: 768px) {
-    .tienda-grid {
-        flex-direction: column;
-        height: auto;
-    }
-    .modal-flex {
-        flex-direction: column;
-    }
-    .modal-contenido {
-        width: 90%;
-        margin: 10% auto;
-    }
-.modal-imagen {
-    height: 250px;
-}
-.modal-imagen img {
-    border-radius: 12px 12px 0 0;
-}
 }
 
-/* Estilos para el Carrito Lateral */
+/* =========================================
+   3. CARRITO LATERAL (FIXED)
+   ========================================= */
+/* Estilos para el Carrito Lateral Reforzados */
 .carrito-sidebar {
-    position: fixed;
+    position: fixed !important; /* Fijo respecto a la ventana del navegador */
     right: -400px;
     top: 0;
     width: 350px;
-    height: 100%;
+    height: 100vh; /* Ocupa todo el alto de la pantalla */
     background: white;
-    box-shadow: -5px 0 15px rgba(0,0,0,0.2);
-    z-index: 5000;
-    transition: 0.4s;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    z-index: 9999 !important; /* Prioridad máxima sobre cualquier elemento */
+    transition: right 0.4s ease-in-out;
     padding: 20px;
     display: flex;
     flex-direction: column;
- }
+}
 
+/* Esta es la clase que activa el movimiento */
 .carrito-sidebar.active {
     right: 0 !important;
-    display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
 }
+
 .carrito-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
- }
+}
+
 .carrito-cuerpo {
     flex: 1;
     overflow-y: auto;
     padding: 20px 0;
- }
-.item-carrito {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    align-items: center;
-    font-size: 0.9rem;
- }
-.btn-pagar{
+}
+
+.btn-pagar {
     width: 100%;
     padding: 12px;
     background: #0a192f;
@@ -233,4 +211,250 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+/* ===== MEJORAS DE ALINEACIÓN ===== */
+
+.opciones-compra {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.fila-cantidad {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.opciones-compra input[type="number"] {
+    width: 80px;
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.opciones-talla {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.opciones-talla label {
+    font-weight: bold;
+}
+
+/* ===== TALLAS TIPO BOTONES ===== */
+
+.tallas-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.talla-btn {
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 0.9rem;
+}
+
+/* Hover */
+.talla-btn:hover {
+    background: #0a192f;
+    color: white;
+    border-color: #0a192f;
+}
+
+/* Seleccionada */
+.talla-btn.active {
+    background: #0a192f;
+    color: white;
+    border-color: #0a192f;
+}
+
+/* Deshabilitada (opcional) */
+.talla-btn.disabled {
+    background: #eee;
+    color: #999;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+.oculto {
+    display: none !important;
+}
+
+/* =========================================
+   4. ESTILOS DEL ICONO DE CARRITO CON BADGE VERDE
+   ========================================= */
+
+.btn-carrito-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.btn-carrito-nav:hover {
+    color: #d9534f;
+}
+
+.carrito-icono-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carrito-icono {
+    width: 22px;
+    height: 22px;
+    stroke: #333;
+    transition: stroke 0.3s;
+}
+
+.btn-carrito-nav:hover .carrito-icono {
+    stroke: #d9534f;
+}
+
+.carrito-contador-badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #4caf50;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    font-family: sans-serif;
+}
+
+.carrito-texto {
+    font-size: 14px;
+}
+
+/* Ajuste para el navbar cuando tiene fondo blanco */
+.navbar.scrolled .carrito-icono {
+    stroke: #333;
+}
+
+.navbar.scrolled .carrito-texto {
+    color: #333;
+}
+
+/* Versión responsive para móviles */
+@media (max-width: 768px) {
+    .carrito-texto {
+        display: none;
+    }
+    
+    .carrito-icono {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .carrito-contador-badge {
+        top: -6px;
+        right: -8px;
+        min-width: 16px;
+        height: 16px;
+        font-size: 9px;
+    }
+}
+
+/* =========================================
+   5. ESTILOS DEL ICONO DE INICIO
+   ========================================= */
+
+.nav-link-inicio {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.nav-link-inicio:hover {
+    color: #d9534f;
+}
+
+.icono-inicio {
+    width: 20px;
+    height: 20px;
+    stroke: #333;
+    transition: stroke 0.3s ease;
+}
+
+.nav-link-inicio:hover .icono-inicio {
+    stroke: #d9534f;
+}
+
+.inicio-texto {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Ajuste para cuando el navbar tiene fondo blanco (scroll) */
+.navbar.scrolled .nav-link-inicio {
+    color: #333;
+}
+
+.navbar.scrolled .icono-inicio {
+    stroke: #333;
+}
+
+.navbar.scrolled .nav-link-inicio:hover {
+    color: #d9534f;
+}
+
+.navbar.scrolled .nav-link-inicio:hover .icono-inicio {
+    stroke: #d9534f;
+}
+
+/* Versión responsive para móviles */
+@media (max-width: 768px) {
+    .inicio-texto {
+        display: none;
+    }
+    
+    .icono-inicio {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.opciones-pago {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.opciones-pago button {
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #f5f5f5;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.opciones-pago button:hover {
+    background: #0a192f;
+    color: white;
 }
