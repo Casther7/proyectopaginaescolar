@@ -1,12 +1,10 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) { session_start(); }
 
-// Protección: Si no hay sesión, lo regresa al inicio
 if(!isset($_SESSION["accesoAdmin"]) || $_SESSION["accesoAdmin"] != "ok"){
     echo '<script>window.location = "index.php";</script>';
     exit();
 }
-// Nombre del admin sacado de la sesión o valor por defecto
 $nombre_admin = isset($_SESSION["nombreAdmin"]) ? $_SESSION["nombreAdmin"] : "Admin";
 ?>
 <!DOCTYPE html>
@@ -14,8 +12,7 @@ $nombre_admin = isset($_SESSION["nombreAdmin"]) ? $_SESSION["nombreAdmin"] : "Ad
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración Estilo Institucional | MiEscuela</title>
-    
+    <title>Panel de Administración | MiEscuela</title>
     <link rel="stylesheet" href="view/css/admin.css">
 </head>
 <body>
@@ -27,43 +24,36 @@ $nombre_admin = isset($_SESSION["nombreAdmin"]) ? $_SESSION["nombreAdmin"] : "Ad
         </div>
         
         <nav class="sidebar-menu">
-            <a href="#" class="menu-item active">
-                <span class="icon">📊</span>
-                <span class="text">Inicio</span>
+            <a href="#" class="menu-item active" id="btn-inicio" onclick="cambiarVista('inicio')">
+                <span class="icon">📊</span><span class="text">Inicio</span>
             </a>
-            <a href="#" class="menu-item">
-                <span class="icon">🎨</span>
-                <span class="text">Diseño</span>
+            <a href="#" class="menu-item" id="btn-diseno" onclick="cambiarVista('diseno')">
+                <span class="icon">🎨</span><span class="text">Diseño</span>
             </a>
-            <a href="#" class="menu-item">
-                <span class="icon">🎒</span>
-                <span class="text">Oferta</span>
+            <a href="#" class="menu-item" id="btn-mensajes" onclick="cambiarVista('mensajes')">
+                <span class="icon">✉️</span><span class="text">Mensajes</span>
             </a>
-            <a href="#" class="menu-item">
-                <span class="icon">🛒</span>
-                <span class="text">Tienda</span>
+            <a href="#" class="menu-item" id="btn-tienda" onclick="cambiarVista('tienda')">
+                <span class="icon">🛒</span><span class="text">Tienda</span>
             </a>
-            <a href="#" class="menu-item">
-                <span class="icon">👥</span>
-                <span class="text">Usuarios</span>
+            <a href="#" class="menu-item" id="btn-usuarios" onclick="cambiarVista('usuarios')">
+                <span class="icon">👥</span><span class="text">Usuarios</span>
+            </a>
+            <a href="#" class="menu-item" id="btn-accesos" onclick="cambiarVista('accesos')">
+                <span class="icon">🔐</span><span class="text">Accesos</span>
             </a>
         </nav>
 
         <div class="sidebar-footer">
             <a href="index.php?ruta=salir" class="menu-item btn-salir">
-                <span class="icon">🚪</span>
-                <span class="text">Salir</span>
+                <span class="icon">🚪</span><span class="text">Salir</span>
             </a>
         </div>
     </aside>
 
     <main class="main-content">
-        
         <header class="top-header">
-            <div class="breadcrumb">
-                Administración > <span class="destacado">Escritorio</span>
-            </div>
-            
+            <div class="breadcrumb">Administración > <span class="destacado">Escritorio</span></div>
             <div class="user-profile">
                 <span>Hola, <?php echo $nombre_admin; ?></span>
                 <div class="avatar"><?php echo strtoupper(substr($nombre_admin, 0, 1)); ?></div>
@@ -71,51 +61,17 @@ $nombre_admin = isset($_SESSION["nombreAdmin"]) ? $_SESSION["nombreAdmin"] : "Ad
             </div>
         </header>
 
-        <div class="dashboard-content">
-            <h1 class="page-title">Visión General del Sistema Escolar</h1>
-            
-            <div class="cards-grid">
-                
-                <div class="card card-accent-blue">
-                    <div class="card-circle-icon">🖼️</div>
-                    <div class="card-text-content">
-                        <h3>Página de Inicio</h3>
-                        <p>Edita banners, misión y comunicados escolares.</p>
-                        <a href="#" class="card-action-btn">Configurar</a>
-                    </div>
-                </div>
-
-                <div class="card card-accent-red">
-                    <div class="card-circle-icon icon-red">🛍️</div>
-                    <div class="card-text-content">
-                        <h3>Tienda Escolar</h3>
-                        <p>Gestiona uniformes, libros y controla las ventas.</p>
-                        <a href="#" class="card-action-btn btn-red">Gestionar</a>
-                    </div>
-                </div>
-
-                <div class="card card-accent-yellow">
-                    <div class="card-circle-icon icon-yellow">✉️</div>
-                    <div class="card-text-content">
-                        <h3>Mensajes</h3>
-                        <p>Tienes 3 consultas sin leer en el formulario.</p>
-                        <a href="#" class="card-btn-text">Ver Mensajes</a>
-                    </div>
-                </div>
-
-                 <div class="card card-accent-green">
-                    <div class="card-circle-icon icon-green">👨‍🏫</div>
-                    <div class="card-text-content">
-                        <h3>Docentes</h3>
-                        <p>Agrega o elimina profesores del directorio.</p>
-                        <a href="#" class="card-btn-text">Gestionar</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+        <?php 
+            include 'admin_modulos/admin_inicio.php';
+            include 'admin_modulos/admin_diseno.php';
+            include 'admin_modulos/admin_mensajes.php';
+            include 'admin_modulos/admin_tienda.php';
+            include 'admin_modulos/admin_usuarios.php';
+            include 'admin_modulos/admin_accesos.php';
+        ?>
 
     </main>
 
+    <script src="view/js/admin.js"></script>
 </body>
 </html>

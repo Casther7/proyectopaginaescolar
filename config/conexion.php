@@ -5,8 +5,8 @@ class Conexion {
         $host = "localhost";
         $db = "db_paginaescolar"; 
         $user = "root";     
-        $pass = "";
-        $port = "3306";
+        $pass = "casther748";
+        $port = "3307";
 
         try {
             // ¡AQUÍ ESTÁ LA MAGIA! Le agregamos el ;port= a la conexión

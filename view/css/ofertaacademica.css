@@ -1,0 +1,370 @@
+/* --- ESTILOS DEL MÓDULO DE CARRERAS --- */
+.seccion-carreras {
+    padding: 80px 50px;
+    background-color: #1a365d; /* Tu fondo azul oscuro */
+    overflow: hidden;
+    position: relative;
+}
+
+.seccion-carreras h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #ffffff; /* Letra blanca para resaltar en el fondo oscuro */
+    margin-bottom: 50px;
+    font-weight: 700;
+}
+
+.carreras-slider-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.carreras-track-wrapper {
+    overflow: hidden;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.carreras-track {
+    display: flex;
+    gap: 30px; 
+    flex-wrap: nowrap; /* MUY IMPORTANTE: Evita que se salten a la siguiente línea */
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Las tarjetas */
+.carrera-card {
+    flex: 0 0 calc(50% - 15px); /* Muestra 2 tarjetas exactas */
+    flex-shrink: 0; /* MUY IMPORTANTE: Evita que se aplasten y rompan el carrusel */
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 40px;
+    border: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.carrera-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+.carrera-nivel { color: #3b82f6; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.carrera-nombre { font-size: 1.5rem; color: #1a365d; margin-bottom: 15px; font-weight: 700; }
+.carrera-desc { color: #64748b; font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; }
+
+/* Botones dentro de la tarjeta (Rojos) */
+.btn-detalles {
+    display: inline-block;
+    background-color: #e53e3e;
+    color: #ffffff;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+    
+}
+.btn-detalles:hover { background-color: #c53030; transform: translateY(-2px); }
+
+/* Botones de flechas (Azul oscuro con borde para que se vean sobre el fondo) */
+.btn-flecha {
+    background-color: #1a365d;
+    color: #ffffff;
+    border: 2px solid #3b82f6;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    position: absolute;
+    z-index: 10;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-flecha:hover { background-color: #3b82f6; transform: scale(1.1); }
+.flecha-izq { left: -25px; }
+.flecha-der { right: -25px; }
+
+/* --- PUNTOS DE NAVEGACIÓN --- */
+.carreras-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 40px;
+}
+
+.carrera-punto {
+    border: none;
+    width: 14px;
+    height: 14px;
+    background-color: #bdc1c6; /* Gris azulado claro */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* El punto que marca la posición actual */
+.carrera-punto.activo {
+    background-color: #ffffff; /* Tu azul principal */
+    transform: scale(1.2); /* Se hace un poquitito más grande */
+}
+
+.carrera-punto:hover {
+    background-color: #8a919a; /* Un gris más oscuro al pasar el mouse */
+}
+
+
+/* ==========================================
+   ESTILOS BASE DEL MODAL (LA VENTANA FLOTANTE EN SÍ)
+   ========================================== */
+
+/* 1. El fondo oscuro que cubre toda la pantalla */
+.modal-flotante-oculto {
+    position: fixed; /* Lo saca del flujo normal de la página */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(14, 27, 56, 0.85); /* Azul oscuro semi-transparente */
+    z-index: 9999; /* Asegura que esté por encima de TODO tu sitio */
+    
+    /* Centrar la caja blanca en medio de la pantalla */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Oculto por defecto con una animación suave */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* 2. La clase que tu JavaScript le agrega para hacerlo aparecer */
+.modal-flotante-oculto.activo {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 3. Ajustes base para la caja de contenido blanca */
+.modal-flotante-contenido {
+    background-color: #ffffff;
+    position: relative; /* Muy importante para que la 'X' se posicione bien */
+    max-height: 90vh; /* Evita que la ventana sea más alta que tu pantalla */
+    overflow-y: auto; /* Si el contenido es mucho, crea un scroll interno */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* 4. La 'X' para cerrar la ventana */
+.btn-cerrar {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 2.2rem;
+    color: #64748b;
+    cursor: pointer;
+    transition: color 0.2s;
+    line-height: 1;
+    z-index: 10;
+}
+
+.btn-cerrar:hover {
+    color: #e53e3e; /* Se pone rojo institucional al pasar el mouse */
+}
+
+
+
+.modal-flotante-contenido.modal-grande {
+    max-width: 950px; /* Hacemos la ventana más ancha */
+    padding: 40px;
+    border-radius: 15px;
+}
+
+/* ==========================================
+   ESTILOS DEL MODAL GRANDE Y CARRUSEL
+   ========================================== */
+.modal-flotante-contenido.modal-grande {
+    max-width: 950px; /* ¡AQUÍ LO HACEMOS MÁS ANCHO! (Antes 750px) */
+    padding: 40px;
+    border-radius: 15px;
+    width: 90%; /* Asegura que en celulares no se salga de la pantalla */
+}
+
+/* ... (Deja los estilos de los textos superiores y del carrusel igual) ... */
+
+/* ==========================================
+   NUEVO: ESTILOS DE LAS PESTAÑAS (TABS)
+   ========================================== */
+.m-tabs-nav {
+    display: flex;
+    gap: 15px;
+    border-bottom: 2px solid #e2e8f0;
+    margin-bottom: 20px;
+    overflow-x: auto; /* Permite arrastrar en celulares si no caben */
+}
+
+.m-tab-btn {
+    background: none;
+    border: none;
+    padding: 10px 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px; /* Se monta sobre la línea gris */
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Evita que el texto se rompa en dos líneas */
+}
+
+.m-tab-btn:hover {
+    color: #1a365d;
+}
+
+/* Estado activo de la pestaña seleccionada */
+.m-tab-btn.activo {
+    color: #e53e3e; /* Tu rojo institucional */
+    border-bottom-color: #e53e3e;
+}
+
+/* Contenedor del texto de la pestaña */
+.m-tab-content {
+    color: #475569;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    min-height: 80px; /* Evita que la ventana brinque mucho si hay poco texto */
+}
+
+/* Textos Superiores */
+.modal-cabecera-top {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.m-nivel-txt {
+    color: #e53e3e; /* Rojo institucional */
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.m-titulo-txt {
+    color: #0e1b38 !important; /* El !important obliga a que sea azul oscuro y no blanco */
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+/* Contenedor del Carrusel de Fotos */
+.m-carrusel-contenedor {
+    width: 100%;
+    height: 400px; /* Altura grande para lucir las fotos */
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    background-color: #f1f5f9;
+}
+
+/* Imágenes del carrusel (Efecto Fade) */
+.m-carrusel-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la foto llene el cuadro sin deformarse */
+    opacity: 0;
+    transition: opacity 1s ease-in-out; /* Transición suave de 1 segundo */
+    z-index: 1;
+}
+
+.m-carrusel-img.activa {
+    opacity: 1; /* Solo la imagen activa se vuelve visible */
+    z-index: 2;
+}
+
+/* Textos Inferiores */
+.modal-cuerpo-bottom {
+    text-align: left;
+}
+
+.m-desc-txt {
+    color: #475569;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+/* Lista de palomitas (checks) */
+.m-detalles-lista {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.m-detalles-lista li {
+    color: #0e1b38;
+    font-weight: 600;
+}
+/* ==========================================
+   IMÁGENES DE CARRERAS (MÁS GRANDES Y LLAMATIVAS)
+   ========================================== */
+
+.carrera-icono-img {
+    height: 230px; /* ¡Aumentamos el alto a más del doble! */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.carrera-icono-img img {
+    max-width: 100%;
+    height: 100%;
+    /* 'contain' hace que la imagen se vea completa sin deformarse. 
+       Si ves que las fotos rectangulares (como las de los alumnos) 
+       se ven mejor llenando un cuadro, cambia 'contain' por 'cover' y agrega 'border-radius: 8px;' */
+    object-fit: contain; 
+    
+    /* Sombra más pronunciada para que "salte" del fondo blanco */
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15)); 
+    
+    /* Transición suave para la animación */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+
+/* Efecto Mágico: La imagen hace un zoom suave cuando pasas el mouse por la tarjeta */
+.carrera-card:hover .carrera-icono-img img {
+    transform: scale(1.1);
+}
+
+/* Imagen dentro de la ventana flotante (Modal) - También la hacemos más grande */
+.modal-flotante-icono-img {
+    width: 120px; /* Antes era 80px */
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.modal-flotante-icono-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

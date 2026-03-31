@@ -28,3 +28,24 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const redesFlotante = document.getElementById('redes-flotante');
+    
+    // NOTA: Reemplaza 'seccion-contacto' con el ID real de tu sección final
+    const seccionContacto = document.getElementById('contacto'); 
+
+    if (redesFlotante && seccionContacto) {
+        window.addEventListener('scroll', () => {
+            // Obtenemos la posición de la sección de contacto
+            const contactoPosicion = seccionContacto.getBoundingClientRect().top;
+            
+            // Si la sección de contacto ya está visible en la pantalla (a menos de 600px del tope)
+            if (contactoPosicion < window.innerHeight - 100) {
+                redesFlotante.classList.add('oculto'); // Desaparece
+            } else {
+                redesFlotante.classList.remove('oculto'); // Vuelve a aparecer
+            }
+        });
+    }
+});

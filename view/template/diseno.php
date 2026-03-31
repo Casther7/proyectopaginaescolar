@@ -59,7 +59,7 @@ if(isset($_GET["ruta"])){
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#nosotros">Nosotros</a></li>
             <li><a href="#academico">Oferta Académica</a></li>
-            <li><a href="#docentes">Docentes</a></li>
+            <li><a href="#noticias">Noticias</a></li>
             <li><a href="#instalaciones">Instalaciones</a></li>
             <li><a href="#contacto">Contacto</a></li>
 

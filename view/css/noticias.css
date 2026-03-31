@@ -1,0 +1,254 @@
+/* ==========================================
+   SECCIÓN: ÚLTIMAS NOTICIAS
+   ========================================== */
+.seccion-noticias {
+    padding: 80px 20px;
+    background-color: #f1f5f9; /* Fondo gris muy clarito para que resalten las tarjetas blancas */
+}
+
+.noticias-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- Cabecera de la sección --- */
+.noticias-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.noticias-header h2 {
+    color: #0e1b38; /* Azul oscuro institucional */
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.noticias-header p {
+    color: #64748b;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- Cuadrícula de Noticias --- */
+.noticias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+/* --- Tarjeta Individual de Noticia --- */
+.noticia-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    overflow: hidden; /* Muy importante para que la imagen no se salga de las curvas */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.noticia-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de la Imagen */
+.noticia-img-container {
+    width: 100%;
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+}
+
+.noticia-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la foto llene el espacio sin deformarse */
+    transition: transform 0.5s ease;
+}
+
+/* Efecto de zoom en la foto al pasar el mouse por la tarjeta */
+.noticia-card:hover .noticia-img-container img {
+    transform: scale(1.08);
+}
+
+/* Etiqueta de Fecha sobre la imagen */
+.noticia-fecha {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #e53e3e; /* Rojo institucional */
+    color: #ffffff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(229, 62, 62, 0.3);
+    z-index: 10;
+}
+
+/* Contenido de texto */
+.noticia-contenido {
+    padding: 30px 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.noticia-categoria {
+    color: #3b82f6; /* Azul brillante */
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.noticia-titulo {
+    color: #0e1b38;
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 15px;
+}
+
+.noticia-desc {
+    color: #475569;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    flex-grow: 1; /* Empuja el botón hacia abajo si el texto es corto */
+}
+
+/* ==========================================
+   BOTÓN "LEER MÁS" (ESTILO PREMIUM)
+   ========================================== */
+.noticia-enlace {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 8px 8px 20px; /* Espacio asimétrico para acomodar el círculo */
+    background-color: #f8fafc; /* Fondo gris súper claro */
+    color: #0e1b38; /* Tu azul institucional */
+    border-radius: 50px; /* Forma de píldora */
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 1px solid #e2e8f0;
+    transition: all 0.4s ease;
+    align-self: flex-start; /* Evita que el botón se estire a todo el ancho */
+    margin-top: auto; /* Empuja el botón siempre hacia abajo */
+}
+
+/* El círculo que contiene la flecha */
+.icono-flecha {
+    background-color: #ffffff;
+    color: #e53e3e; /* Flecha en rojo institucional */
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-left: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Sombrita elegante */
+    transition: all 0.4s ease;
+}
+
+/* --- MAGIA AL PASAR EL MOUSE (HOVER) --- */
+.noticia-enlace:hover {
+    background-color: #a7a7a7; /* El fondo se vuelve azul oscuro */
+    color: #ffffff; /* El texto se vuelve blanco */
+    border-color: #949eb3;
+    box-shadow: 0 8px 15px rgba(14, 27, 56, 0.2); /* Sombra azulada */
+    transform: translateY(-2px); /* Se levanta un poquito */
+}
+
+.noticia-enlace:hover .icono-flecha {
+    background-color: #635bd6; /* El círculo se vuelve rojo */
+    color: #ffffff; /* La flecha se vuelve blanca */
+    transform: translateX(3px); /* La flecha empuja un poco a la derecha */
+}
+
+/* ==========================================
+   MODAL DE NOTICIAS (VENTANA FLOTANTE)
+   ========================================== */
+.modal-noticia-oculto {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100vh;
+    background-color: rgba(14, 27, 56, 0.85); /* Fondo oscuro transparente */
+    z-index: 9999;
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-noticia-oculto.activo {
+    opacity: 1; visibility: visible;
+}
+
+.modal-noticia-contenido {
+    background-color: #ffffff;
+    width: 90%; max-width: 800px;
+    max-height: 90vh; overflow-y: auto; /* Scroll si el texto es muy largo */
+    border-radius: 15px;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* El botón de cerrar flotando arriba a la derecha */
+.btn-cerrar-img {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 2rem;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.5); /* Círculo negro transparente */
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.2s;
+    line-height: 1;
+}
+
+.btn-cerrar-img:hover {
+    background-color: #e53e3e; /* Rojo al pasar el mouse */
+}
+
+/* Contenedor de la Imagen principal */
+.m-noticia-img-contenedor {
+    width: 100%;
+    height: 350px; /* Foto alta */
+    position: relative;
+}
+
+.m-noticia-img-contenedor img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+}
+
+.m-noticia-fecha-tag {
+    position: absolute; top: 20px; left: 20px;
+    background-color: #e53e3e; color: #ffffff;
+    padding: 8px 15px; border-radius: 8px; font-weight: 700;
+}
+
+/* Cuerpo de textos */
+.m-noticia-cuerpo {
+    padding: 40px;
+}
+
+.m-noticia-cat-txt {
+    color: #3b82f6; font-weight: 700; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 10px; display: block;
+}
+
+.m-noticia-titulo-txt {
+    color: #0e1b38 !important; font-size: 2.2rem; font-weight: 800; margin-bottom: 25px; line-height: 1.2;
+}
+
+.m-noticia-desc-txt {
+    color: #475569; font-size: 1.1rem; line-height: 1.8;
+}

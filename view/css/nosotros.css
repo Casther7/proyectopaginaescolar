@@ -1,0 +1,127 @@
+/* ==========================================
+   SECCIÓN: NOSOTROS (Acordeón y Detalles)
+   ========================================== */
+.seccion-nosotros {
+    padding: 80px 20px;
+    background-color: #f8fafc; /* Fondo gris muy clarito */
+    display: flex;
+    justify-content: center;
+}
+
+.nosotros-container {
+    max-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+    gap: 60px; /* Separación entre las columnas */
+}
+
+/* ================= COLUMNA IZQUIERDA ================= */
+.nosotros-titulo {
+    font-size: 2rem;
+    color: #1e3a5f; /* Azul oscuro institucional */
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.nosotros-texto {
+    color: #64748b; /* Gris texto */
+    line-height: 1.7;
+    margin-bottom: 25px;
+    font-size: 1.05rem;
+}
+
+.nosotros-resaltado {
+    font-weight: 700;
+    color: #475569;
+}
+
+.nosotros-lista {
+    list-style: none;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.nosotros-lista li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 700;
+    color: #475569;
+    font-size: 1.1rem;
+}
+
+.nosotros-lista i {
+    color: #1e3a5f; /* Color de los iconos */
+    width: 25px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+/* ================= COLUMNA DERECHA (ACORDEÓN) ================= */
+.valores-acordeon {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Separación entre las cajas blancas */
+}
+
+.valor-item {
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.valor-item summary {
+    padding: 20px;
+    font-weight: 700;
+    color: #e68a00; /* Color naranja/dorado de los títulos */
+    cursor: pointer;
+    list-style: none; /* Quita la flecha por defecto del navegador */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.15rem;
+    transition: background 0.2s;
+}
+
+/* Ocultar la flecha fea en Safari/Chrome */
+.valor-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.valor-item summary:hover {
+    background: #fffbeb; /* Efecto hover sutil */
+}
+
+/* El contenido del texto desplegado */
+.valor-item p {
+    padding: 0 20px 20px 50px; /* Margen izquierdo para alinear con el texto */
+    color: #64748b;
+    line-height: 1.6;
+}
+
+/* El icono + (Se transforma en - cuando está abierto) */
+.valor-item summary::before {
+    content: '+';
+    font-size: 1.6rem;
+    font-weight: bold;
+    width: 20px;
+    text-align: center;
+}
+
+.valor-item[open] summary::before {
+    content: '-';
+    color: #64748b; /* Cambia a gris cuando se abre */
+}
+
+/* Responsive: Una sola columna en celulares */
+@media (max-width: 900px) {
+    .nosotros-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}

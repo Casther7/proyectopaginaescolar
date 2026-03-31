@@ -175,3 +175,600 @@ body { background-color: var(--gris-fondo); color: var(--texto-oscuro); display:
 
 .card-btn-text { color: var(--azul-escuela); font-weight: 600; text-decoration: none; font-size: 0.9rem; }
 .card-btn-text:hover { text-decoration: underline; }
+
+/* --- ESTILOS PARA FORMULARIOS DEL ADMIN --- */
+.form-card { flex-direction: column; align-items: stretch; gap: 15px; }
+.form-section-title { font-size: 1.1rem; color: var(--azul-escuela); border-bottom: 2px solid var(--gris-borde); padding-bottom: 10px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
+.form-group label { font-size: 0.9rem; font-weight: 600; color: var(--texto-oscuro); }
+.input-admin { width: 100%; padding: 12px 15px; border: 1px solid var(--gris-borde); border-radius: 8px; font-size: 0.95rem; font-family: 'Inter', sans-serif; transition: 0.3s; background-color: var(--fondo-claro); }
+.input-admin:focus { outline: none; border-color: var(--azul-acento); background-color: var(--blanco-puro); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+.btn-guardar { background-color: #10b981; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2); }
+.btn-guardar:hover { background-color: #059669; transform: translateY(-2px); }
+
+/* ==========================================
+   ESTILOS DE LA BANDEJA DE MENSAJES
+   ========================================== */
+.header-mensajes {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 30px;
+}
+
+.header-mensajes .page-title { margin-bottom: 5px; }
+.header-mensajes p { color: var(--texto-gris); }
+
+.card-tabla {
+    padding: 0; 
+    overflow: hidden;
+}
+
+.tabla-mensajes {
+    width: 100%; 
+    border-collapse: collapse; 
+    text-align: left;
+}
+
+.tabla-mensajes thead {
+    background-color: #f8fafc; 
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.tabla-mensajes th {
+    padding: 15px 20px; 
+    color: #64748b; 
+    font-size: 0.85rem; 
+    text-transform: uppercase;
+}
+
+.tabla-mensajes th.text-center, 
+.tabla-mensajes td.text-center {
+    text-align: center;
+}
+
+.tabla-mensajes tbody tr {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.tabla-mensajes td {
+    padding: 15px 20px;
+    white-space: nowrap;
+}
+
+/* --- ESTADOS DE LOS MENSAJES --- */
+/* Mensaje Nuevo (Resaltado) */
+.fila-nueva { background-color: #f0fdf4; }
+.fila-nueva .fecha-msj { font-weight: 600; color: #0f172a; }
+.fila-nueva .remitente-nombre { font-weight: 600; color: #0f172a; }
+.fila-nueva .tag-interes { font-weight: 600; color: #3b82f6; }
+.fila-nueva .mensaje-truncado { color: #334155; font-weight: 500; }
+
+/* Mensaje Leído (Normal) */
+.fila-leida { background-color: #ffffff; }
+.fila-leida .fecha-msj { color: #64748b; }
+.fila-leida .remitente-nombre { font-weight: 500; color: #334155; }
+.fila-leida .tag-interes { font-weight: 500; color: #64748b; }
+.fila-leida .mensaje-truncado { color: #64748b; }
+
+/* Elementos comunes en celdas */
+.remitente-email { font-size: 0.85rem; color: #64748b; }
+.mensaje-truncado { max-width: 250px; overflow: hidden; text-overflow: ellipsis; }
+
+/* --- BOTONES DE LA TABLA --- */
+.btn-leer {
+    background: #3b82f6; 
+    color: white; 
+    border: none; 
+    padding: 6px 12px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 0.85rem; 
+    margin-right: 5px; 
+    font-weight: 600;
+    transition: 0.2s;
+}
+.btn-leer:hover { background: #2563eb; }
+
+.btn-leer-sec {
+    background: #e2e8f0; 
+    color: #475569; 
+    border: none; 
+    padding: 6px 12px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 0.85rem; 
+    margin-right: 5px; 
+    font-weight: 600;
+    transition: 0.2s;
+}
+.btn-leer-sec:hover { background: #cbd5e0; }
+
+.btn-eliminar {
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    font-size: 1.2rem;
+    transition: 0.2s;
+}
+.btn-eliminar:hover { transform: scale(1.1); }
+
+/* ==========================================
+   ESTILOS DE GESTIÓN DE USUARIOS Y PERMISOS
+   ========================================== */
+.permisos-contenedor {
+    background: #f8fafc;
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    margin-top: 15px;
+}
+
+.permisos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas */
+    gap: 30px;
+}
+
+.permisos-columna {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.permisos-titulo-col {
+    font-size: 1.05rem;
+    color: #1a365d;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 10px;
+    font-weight: 700;
+}
+
+.permiso-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    color: #475569;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.permiso-item:hover {
+    color: #1a365d;
+    font-weight: 500;
+}
+
+/* Haciendo la casilla de verificación más bonita */
+.permiso-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #3b82f6; /* Tu azul para cuando se marque */
+}
+
+/* ==========================================
+   ESTILOS DE USUARIOS Y MATRIZ DE ACCESOS
+   ========================================== */
+
+/* Formularios */
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.select-admin {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+.form-actions-right {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.titulo-seccion-secundario {
+    color: #1a365d;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+/* Textos dentro de las Tablas */
+.txt-nombre {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.txt-correo {
+    color: #64748b;
+}
+
+.txt-rol-desc {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+/* Badges (Etiquetas de colores para roles) */
+.badge-editor {
+    display: inline-block;
+    background: #e0e7ff;
+    color: #4338ca;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-admin {
+    display: inline-block;
+    background: #dcfce7;
+    color: #166534;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Cabecera específica para la matriz de accesos */
+.header-accesos {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+}
+
+/* Tabla de Matriz de Accesos */
+.tabla-accesos {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 800px;
+}
+
+.tabla-accesos thead {
+    background-color: #f8fafc;
+}
+
+.tabla-accesos th {
+    padding: 15px 20px;
+    color: #64748b;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    border-right: 1px solid #e7e7e7;
+}
+
+.tabla-accesos td {
+    padding: 15px 20px;
+    white-space: nowrap;
+    border-right: 1px solid #e2e8f0;
+}
+
+.checkbox-admin {
+    width: 20px;
+    height: 20px;
+    accent-color: #3b82f6;
+    cursor: pointer;
+}
+/* ==========================================
+   NUEVO DISEÑO DE ACCESOS (SELECTOR Y SWITCHES)
+   ========================================== */
+
+/* Selector de Usuario superior */
+.accesos-selector-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.label-selector {
+    font-weight: 700;
+    color: #1a365d;
+    font-size: 1.1rem;
+}
+
+.select-usuario-grande {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 2px solid #cbd5e1;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 350px;
+    color: #0f172a;
+    font-weight: 600;
+    background-color: #f8fafc;
+    cursor: pointer;
+}
+
+/* Grid de los paneles de permisos */
+.paneles-permisos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas para aprovechar el espacio */
+    gap: 25px;
+}
+
+.panel-permiso {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.panel-permiso-header {
+    background: #f8fafc;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e2e8f0;
+    font-weight: 700;
+    color: #1a365d;
+    font-size: 1.05rem;
+}
+
+.panel-permiso-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.permiso-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #e2e8f0;
+}
+.permiso-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.permiso-label {
+    color: #334155;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Magia CSS: Crear un Switch (Interruptor) moderno */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #cbd5e1;
+    transition: .3s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider {
+    background-color: #3b82f6; /* Tu azul cuando está activado */
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+/* ==========================================
+   NUEVO DISEÑO DE FORMULARIO CON FOTO DE PERFIL
+   ========================================== */
+
+/* Contenedor principal que divide foto y datos */
+.form-usuario-container {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/* Área de la Foto (Izquierda) */
+.area-foto-upload {
+    flex: 0 0 150px; /* Ancho fijo para la foto */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* El círculo del Avatar */
+.avatar-preview-container {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #f1f5f9; /* Gris azulado muy claro */
+    border: 3px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #94a3b8; /* Gris placeholder */
+    font-size: 4rem; /* Tamaño del icono 👤 */
+}
+
+/* Si hay imagen, se ajusta al círculo */
+.avatar-preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Botón personalizado para subir archivo (Azul Institucional) */
+.label-archivo-custom {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #1a365d; /* Tu azul principal */
+    color: #ffffff;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-align: center;
+}
+
+.label-archivo-custom:hover {
+    background-color: #3b82f6; /* Azul brillante al pasar mouse */
+}
+
+/* Ocultar el input file real y feo del navegador */
+.input-archivo-oculto {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+/* Área de Datos (Derecha - sigue siendo grid) */
+.area-datos-form {
+    flex: 1; /* Ocupa el resto del espacio */
+}
+
+/* ==========================================
+   NUEVO DISEÑO DE EDICIÓN DE BANNER (FONDO)
+   ========================================== */
+
+/* Contenedor del grupo de medios dentro de la tarjeta form-card */
+.form-media-banner-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas: Imagen y Video */
+    gap: 25px;
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px dashed var(--gris-borde);
+}
+
+/* Grupo individual de carga (Imagen o Video) */
+.form-media-banner-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* El círculo del Avatar para previsualizar (placeholder) */
+.banner-preview-circle {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: var(--gris-fondo);
+    border: 3px solid var(--gris-borde);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #94a3b8; /* Gris placeholder */
+    font-size: 3rem; /* Tamaño de los iconos 🖼️ o 📹 */
+}
+
+/* Estilos para las imágenes y videos dentro del círculo */
+.banner-preview-circle img,
+.banner-preview-circle video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Títulos y textos descriptivos de la carga */
+.media-upload-texts h4 {
+    color: #1a365d; /* Tu azul principal */
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+.media-upload-texts p {
+    color: var(--texto-gris);
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+/* Botón personalizado para subir archivo (Azul Institucional) */
+.label-archivo-custom {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #1a365d; /* Tu azul principal */
+    color: #ffffff;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.label-archivo-custom:hover {
+    background-color: #3b82f6; /* Azul brillante al pasar mouse */
+}
+
+/* Ocultar el input file real y feo del navegador */
+.input-archivo-oculto {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+/* ==========================================
+   ESTILOS PARA EDICIÓN DE OFERTA ACADÉMICA
+   ========================================== */
+.sub-form-container {
+    border: 1px solid var(--gris-borde);
+    padding: 25px;
+    border-radius: 10px;
+    background-color: #f8fafc; /* Fondo ligeramente gris para separarlo */
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.sub-form-title {
+    color: var(--azul-escuela);
+    margin-bottom: 20px;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px dashed #cbd5e1;
+    padding-bottom: 10px;
+    font-weight: 700;
+}
+
+/* Opciones destacadas en el select */
+.opcion-destacada {
+    font-weight: bold;
+    color: var(--azul-acento);
+    background-color: #eff6ff;
+}

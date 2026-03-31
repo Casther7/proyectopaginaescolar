@@ -161,5 +161,103 @@ section { padding: 100px 50px 60px; min-height: 80vh; }
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
+ 
     font-size: 1rem;
+}
+
+/* ==========================================
+   BOTÓN FLOTANTE ADHESIVO DE REDES SOCIALES
+   ========================================== */
+.contenedor-redes-flotante {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 5000;
+    
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0; /* Sin espacio por defecto */
+    
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px); /* Efecto cristal */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    
+    width: 60px; /* Tamaño inicial pequeño (solo para el icono central) */
+    height: 60px;
+    overflow: hidden; /* Oculta los demás botones */
+    
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+/* El icono de Menú Hamburguesa que se ve al principio */
+.icono-centro-redes {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #1f2937;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+/* --- ESTADOS AL PASAR EL MOUSE (HOVER) --- */
+.contenedor-redes-flotante:hover {
+    width: 160px; /* Se expande la cuadrícula */
+    height: 160px;
+    gap: 8px; /* Se separan los botones */
+    padding: 8px;
+    background-color: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+}
+
+/* Ocultar el icono central al hacer hover */
+.contenedor-redes-flotante:hover .icono-centro-redes {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Diseño de cada botoncito */
+.item-red-social {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    color: #4b5563; /* Gris por defecto */
+    transition: all 0.3s ease;
+    opacity: 0; /* Invisibles al principio */
+}
+
+/* Mostrar los botones al hacer hover en el contenedor grande */
+.contenedor-redes-flotante:hover .item-red-social {
+    opacity: 1;
+}
+
+/* Bordes redondeados para las esquinas de la cuadrícula */
+.rounded-tr { border-top-right-radius: 8px; }
+.rounded-bl { border-bottom-left-radius: 8px; }
+.rounded-br { border-bottom-right-radius: 8px; }
+
+/* --- COLORES AL PASAR EL MOUSE POR CADA BOTÓN --- */
+.item-red-social:hover { color: white; transform: scale(1.05); }
+
+.item-red-social.bg-instagram:hover { background-color: #cc39a4; border-top-left-radius: 8px; }
+.item-red-social.bg-twitter:hover { background-color: #3b82f6; } /* Azul Tailwind */
+.item-red-social.bg-reddit:hover { background-color: #ef4444; } /* Rojo Tailwind */
+.item-red-social.bg-whatsapp:hover { background-color: #22c55e; } /* Verde Tailwind */
+.item-red-social.bg-negro:hover { background-color: #000000; }
+.item-red-social.bg-linkedin:hover { background-color: #2563eb; } /* Azul oscuro Tailwind */
+.item-red-social.bg-facebook:hover { background-color: #1d4ed8; } /* Azul más oscuro Tailwind */
+.item-red-social.bg-youtube:hover { background-color: #ef4444; } /* Rojo Tailwind */
+
+/* --- CLASE PARA OCULTARLO CON JAVASCRIPT --- */
+.contenedor-redes-flotante.oculto {
+    opacity: 0;
+    transform: translateY(100px); /* Lo baja fuera de la pantalla */
+    pointer-events: none;
 }
