@@ -1,192 +1,171 @@
+/* admin_tienda.css */
 :root {
-    --bg-main: #f4f7f9;        /* Gris galería claro */
-    --sand-accent: #fdf6e3;    /* Tono arena para detalles */
-    --azul-escuela: #0e1b38;   /* Tu azul institucional */
-    --blanco: #ffffff;
-    --texto-dark: #1e293b;
-    --gris-borde: #0e1b38;
+    --azul-institucional: #0e1b38;
+    --arena-suave: #fdf6e3;
+    --gris-fondo: #f8fafc;
+
+     --blanco: #ffffff;
+    --arena: #fdf6e3;
+    --azul-escuela: #0e1b38;
+    --rojo-escuela: #e74c3c;
 }
 
-/* Contenedor principal de la vista */
 #vista-tienda {
-    padding: 25px;
-    background-color: var(--bg-main);
+    padding: 40px; /* Más espacio alrededor de todo el panel */
+    background-color: var(--gris-fondo);
     min-height: 100vh;
 }
 
-/* Encabezado de la página */
-.page-title {
-    color: var(--azul-escuela);
-    font-weight: 700;
-    font-size: 1.8rem;
-    margin-bottom: 5px;
+.header-tienda {
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--azul-institucional);
+    padding-bottom: 10px;
 }
 
-.text-muted {
-    color: #64748b;
-    font-size: 0.9rem;
-}
-
-/* Tarjeta contenedora de la tabla */
-.table-responsive {
-    background: var(--blanco);
-    border-radius: 15px;
-    border: 1px solid var(--gris-borde);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+/* Contenedor de la tabla para que no toque los bordes */
+.tabla-container {
+    background: white;
     padding: 20px;
-    margin-top: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-/* Estilo de la Tabla */
-.table {
-    margin-bottom: 0;
+.tabla-productos {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 15px; /* Crea el efecto de filas separadas */
 }
 
-.table thead th {
-    background-color: #f8fafc;
-    color: #475569;
-    font-weight: 600;
+.tabla-productos th {
+    color: #64748b;
     text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-    padding: 15px;
-    border-bottom: 2px solid var(--gris-borde);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    padding: 10px 20px;
 }
 
-.table tbody tr {
-    transition: background-color 0.2s;
-}
-
-.table tbody tr:hover {
-    background-color: #f1f5f9; /* Efecto sutil al pasar el mouse */
-}
-
-.table td {
-    padding: 15px;
-    vertical-align: middle;
-    color: var(--texto-dark);
+.tabla-productos tr td {
+    background: white;
+    padding: 20px;
+    border-top: 1px solid #f1f5f9;
     border-bottom: 1px solid #f1f5f9;
 }
 
-/* Imagen del producto */
-.img-producto {
-    width: 50px;
-    height: 50px;
+/* Redondear las esquinas de cada fila */
+.tabla-productos tr td:first-child { border-left: 1px solid #f1f5f9; border-radius: 10px 0 0 10px; }
+.tabla-productos tr td:last-child { border-right: 1px solid #f1f5f9; border-radius: 0 10px 10px 0; }
+
+/* Imagen del producto más estética */
+.img-tabla {
+    width: 70px;
+    height: 70px;
     object-fit: cover;
-    border-radius: 10px;
-    border: 2px solid var(--sand-accent);
-}
-
-/* Badges de Stock Estilo Pastel */
-.badge {
-    padding: 6px 12px;
-    border-radius: 30px;
-    font-weight: 500;
-}
-
-.bg-warning {
-    background-color: #fef3c7 !important; /* Naranja pastel */
-    color: #92400e !important;
-}
-
-.bg-light {
-    background-color: var(--sand-accent) !important;
-    color: #5d4037 !important;
-}
-
-/* Botones de Acción */
-.btn-outline-primary {
-    border-color: #cbd5e1;
-    color: var(--azul-escuela);
-    font-weight: 500;
     border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.btn-outline-primary:hover {
-    background-color: var(--azul-escuela);
-    border-color: var(--azul-escuela);
-    color: white;
-}
-
-.btn-outline-danger {
-    border-color: #fee2e2;
-    color: #ef4444;
-    border-radius: 8px;
-}
-
-.btn-outline-danger:hover {
-    background-color: #ef4444;
-    color: white;
-}
-
-/* Fondo oscuro que cubre la pantalla */
-.modal-overlay {
-    display: none; /* Oculto por defecto */
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
+.tabla-productos {
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Sombra transparente */
-    backdrop-filter: blur(4px); /* Efecto de desenfoque */
+    table-layout: fixed; /* Esto obliga a respetar los anchos */
+    border-collapse: separate;
+    border-spacing: 0 10px;
 }
 
-/* Caja del Modal */
+/* Definir anchos para que nada se encime */
+.tabla-productos th:nth-child(1), .tabla-productos td:nth-child(1) { width: 15%; } /* Imagen */
+.tabla-productos th:nth-child(2), .tabla-productos td:nth-child(2) { width: 35%; } /* Info */
+.tabla-productos th:nth-child(3), .tabla-productos td:nth-child(3) { width: 20%; } /* Stock */
+.tabla-productos th:nth-child(4), .tabla-productos td:nth-child(4) { width: 15%; } /* Precio */
+.tabla-productos th:nth-child(5), .tabla-productos td:nth-child(5) { width: 15%; } /* Acciones */
+
+.img-tabla {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    margin: auto;
+}
+
+/* Botón Editar */
+.btn-editar {
+    background-color: var(--azul-escuela);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-editar:hover {
+    background-color: var(--rojo-escuela);
+}
+
+/* Modal Estilo Arena */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000;
+}
+
 .modal-content-custom {
-    background-color: #ffffff;
-    margin: 10% auto;
-    width: 90%;
-    max-width: 500px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    animation: aparecer 0.3s ease;
+    background: var(--blanco);
+    width: 450px;
+    border-radius: 15px;
+    overflow: hidden;
+    animation: slideDown 0.4s ease;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
 }
 
-/* Encabezado con tu tono Arena */
-.modal-header-custom {
-    background-color: #fdf6e3; /* Color Arena */
-    padding: 15px 20px;
-    border-radius: 12px 12px 0 0;
+.modal-footer-custom {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 15px;
 }
 
-.modal-header-custom h3 { margin: 0; color: #0e1b38; font-size: 1.2rem; }
+.modal-footer-custom button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
 
-/* Cuerpo del formulario */
-.modal-body-custom { padding: 20px; }
+.modal-header-custom {
+    background-color: var(--arena);
+    padding: 20px;
+    border-bottom: 2px solid #eee;
+    text-align: center;
+}
+
+.btn-guardar {
+    background: #2ecc71;
+    color: white;
+}
+
+.modal-body-custom { padding: 25px; }
 
 .input-group { margin-bottom: 15px; }
-.input-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #475569; }
+.input-group label { display: block; font-weight: bold; margin-bottom: 5px; color: var(--azul-escuela); }
 .input-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    background-color: #f8fafc; /* Gallery Gray */
+    width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;
 }
 
-/* Botones personalizados */
-.modal-footer-custom {
-    padding: 15px 20px;
-    text-align: right;
-    border-top: 1px solid #f1f5f9;
-}
-
-.btn-cancelar { background: none; border: none; cursor: pointer; color: #64748b; margin-right: 15px; }
-.btn-guardar { 
-    background-color: #0e1b38; /* Tu Azul */
-    color: white; 
-    border: none; 
-    padding: 10px 20px; 
-    border-radius: 6px; 
-    cursor: pointer; 
-}
-
-/* Animación */
-@keyframes aparecer {
+@keyframes slideDown {
     from { transform: translateY(-50px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
+}
+
+.btn-agregar {
+    background: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 15px;
 }
