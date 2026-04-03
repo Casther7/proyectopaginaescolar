@@ -2,11 +2,11 @@
 let carrito = [];
 
 // 2. Funciones del Modal de Detalles
-function abrirModal(titulo, precio, desc, imagen, tieneTalla) {
+function abrirModal(nombre, precio, desc, imagen, tieneTalla) {
     
     const modal = document.getElementById('modalProducto');
-    
-    document.getElementById('tituloModal').innerText = titulo;
+
+    document.getElementById('tituloModal').innerText = nombre;
     document.getElementById('precioModal').innerText = precio;
     document.getElementById('descModal').innerText = desc;
     document.getElementById('imgModal').src = imagen;
@@ -53,9 +53,9 @@ function toggleCarrito(event) {
     }
 }
 
-function agregarAlCarrito() {
+function agregarAlCarrito(id) {
     // Obtenemos los datos actuales del modal
-    const titulo = document.getElementById('tituloModal').innerText;
+    const nombre = document.getElementById('tituloModal').innerText;
     const precioTexto = document.getElementById('precioModal').innerText;
     const precio = parseFloat(precioTexto.replace(/[^\d.]/g, '')); // Limpieza más segura del precio
     const imagen = document.getElementById('imgModal').src;
@@ -73,14 +73,14 @@ if (contenedorTalla && contenedorTalla.style.display !== 'none' && !talla) {
 }
 
     // Buscamos si el producto ya existe para no duplicar filas
-    const indiceExistente = carrito.findIndex(prod => prod.titulo === titulo);
+    const indiceExistente = carrito.findIndex(prod => prod.nombre === nombre);
 
     if (indiceExistente !== -1) {
         // Si ya existe, sumamos la cantidad seleccionada a la que ya teníamos
         carrito[indiceExistente].cantidad += cantidad;
     } else {
         // Si es nuevo, lo agregamos con la propiedad cantidad
-        const producto = { titulo, precio, imagen, cantidad: cantidad };
+        const producto = { nombre, precio, imagen, cantidad: cantidad };
         carrito.push(producto);
     }
 
@@ -111,7 +111,7 @@ function actualizarInterfazCarrito() {
                 <div class="item-carrito" style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
                     <img src="${prod.imagen}" width="50" height="50" style="object-fit: cover; border-radius: 4px;">
                     <div style="flex: 1;">
-                        <p style="margin:0; font-weight:bold; font-size: 0.9rem;">${prod.titulo}</p>
+                        <p style="margin:0; font-weight:bold; font-size: 0.9rem;">${prod.nombre}</p>
                         <p style="margin:0; color: #666; font-size: 0.8rem;">
                             ${prod.cantidad} x $${prod.precio.toFixed(2)} = <strong>$${subtotal.toFixed(2)}</strong>
                         </p>
@@ -175,14 +175,58 @@ function seleccionarPago(metodo) {
 
 // Confirmar compra
 function confirmarCompra() {
-    if (!metodoPago) {
-        alert("Selecciona un método de pago");
+
+    if (carrito.length === 0) {
+    alert("El carrito está vacío");
+    return;
+}
+
+    if (carrito.length === 0) {
+        alert("El carrito está vacío");
         return;
     }
 
-    alert("Compra realizada con " + metodoPago);
+    $.ajax({
+        url: "/proyectopaginaescolar/ajax/comprar_carrito.php",
+        type: "POST",
+        data: {
+            carrito: JSON.stringify(carrito)
+        },
 
-    carrito = [];
-    actualizarInterfazCarrito();
-    cerrarModalPago();
+        success: function(respuesta) {
+
+            if (respuesta.status === "success") {
+
+                alert("✅ Compra realizada correctamente");
+
+                localStorage.removeItem("carrito"); // 🧹 limpiar carrito
+                cerrarModalPago();
+
+                location.reload();
+
+            } else {
+                alert("❌ " + respuesta.message);
+            }
+        },
+
+        error: function() {
+            alert("❌ Error en la compra");
+        }
+    });
+}
+
+// tienda.js
+function abrirModal(nombre , precio, imagen, tieneTalla) {
+    document.getElementById('tituloModal').innerText = nombre;
+    document.getElementById('precioModal').innerText = precio;
+    document.getElementById('imgModal').src = imagen;
+
+
+    const contenedorTalla = document.getElementById('contenedorTalla');
+    if (contenedorTalla) {
+        // Si el producto tiene tallas en la BD, mostramos el selector
+        contenedorTalla.style.display = tieneTalla ? 'block' : 'none';
+    }
+    
+    document.getElementById('modalProducto').style.display = 'block';
 }

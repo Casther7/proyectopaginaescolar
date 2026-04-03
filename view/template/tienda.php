@@ -1,53 +1,62 @@
 <?php
-/* Archivo: tienda.php - Incluye Modal de Detalles */
+/* Archivo: tienda.php */
+require_once "config/conexion.php"; 
+
+// Conectamos y traemos los productos
+$db = Conexion::conectar();
+$stmt = $db->prepare("SELECT * FROM productos");
+$stmt->execute();
+$productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <link rel="stylesheet" href="view/css/tienda.css">
 
 <section class="tienda-contenedor">
     <div class="tienda-grid">
         
-        <div class="producto-principal" onclick="abrirModal('Playera Institucional', '$350.00', 'Playera tipo polo con escudo bordado. Disponible en tallas S, M, L y XL. Material 100% algodón.', 'https://i.pinimg.com/736x/6c/b1/99/6cb199c80970b73721408a2b11b65662.jpg', true)">
-            <div class="tarjeta-tienda">
-                <img src="https://i.pinimg.com/736x/6c/b1/99/6cb199c80970b73721408a2b11b65662.jpg" alt="Playera">
-                <div class="info-overlay">
-                    <span class="tag">Nuevo</span>
-                    <h3>Playera Institucional</h3>
-                    <p class="precio">$350.00</p>
-                    <span class="btn-ver">Ver detalles</span>
-                </div>
-            </div>
-        </div>
+        <?php foreach ($productos as $indice => $prod): ?>
+            <?php 
+                // Determinamos si es el producto principal (el primero del array)
+                // o si va al mosaico lateral
+                $claseTarjeta = ($indice === 0) ? "producto-principal" : "tarjeta-tienda";
+                
+                // Preparamos los datos para el modal de JS
+                // Escapamos comillas para evitar errores en el onClick
+                $nombreJS = htmlspecialchars($prod['nombre'], ENT_QUOTES);
+                $precioJS = "$" . number_format($prod['precio'], 2);
+                $tallasJS = htmlspecialchars($prod['tallas'], ENT_QUOTES);
+                $tieneTalla = !empty($prod['tallas']) ? 'true' : 'false';
+            ?>
 
-        <div class="producto-mosaico">
-            <div class="tarjeta-tienda horizontal" onclick="abrirModal('Sudadera Deportiva', '$550.00', 'Sudadera con capucha y cierre. Ideal para invierno y actividades deportivas.', 'https://i.pinimg.com/1200x/10/8c/ac/108cac2bb1f4e33c37c4e553f4b45547.jpg', true)">
-                <img src="https://i.pinimg.com/1200x/10/8c/ac/108cac2bb1f4e33c37c4e553f4b45547.jpg" alt="Sudadera">
-                <div class="info-overlay">
-                    <h3>Sudadera Deportiva</h3>
-                    <p class="precio">$550.00</p>
-                    <span class="btn-link">Ver más</span>
-                </div>
-            </div>
-
-            <div class="fila-inferior">
-                <div class="tarjeta-tienda" onclick="abrirModal('Gorra Oficial', '$180.00', 'Gorra ajustable con logo bordado en alta definición.', 'https://i.pinimg.com/1200x/8d/22/bb/8d22bb4217a0ec72d0055e9ab659a02a.jpg', false)">
-                    <img src="https://i.pinimg.com/1200x/8d/22/bb/8d22bb4217a0ec72d0055e9ab659a02a.jpg" alt="Gorra">
-                    <div class="info-overlay">
-                        <h3>Gorra Oficial</h3>
-                        <p class="precio">$180.00</p>
+            <?php if ($indice === 0): ?>
+                <div class="producto-principal" onclick="abrirModal('<?= $nombreJS ?>', '<?= $precioJS ?>', 'Producto escolar de alta calidad.', '<?= $prod['imagen'] ?>', <?= $tieneTalla ?>)">
+                    <div class="tarjeta-tienda">
+                        <img src="<?= $prod['imagen'] ?>" alt="<?= $nombreJS ?>">
+                        <div class="info-overlay">
+                            <span class="tag">Nuevo</span>
+                            <h3><?= $prod['nombre'] ?></h3>
+                            <p class="precio">$<?= number_format($prod['precio'], 2) ?></p>
+                            <span class="btn-ver">Ver detalles</span>
+                        </div>
                     </div>
                 </div>
-                <div class="tarjeta-tienda" onclick="abrirModal('Termo Escolar', '$220.00', 'Termo de acero inoxidable. Mantiene bebidas frías o calientes por 12 horas.', 'https://i.pinimg.com/736x/96/63/ed/9663ede9d6a225bfbdabef793f611424.jpg', false)">
-                    <img src="https://i.pinimg.com/736x/96/63/ed/9663ede9d6a225bfbdabef793f611424.jpg" alt="Termo">
+                <div class="producto-mosaico"> <?php else: ?>
+                <div class="<?= $claseTarjeta ?>" onclick="abrirModal('<?= $nombreJS ?>', '<?= $precioJS ?>', 'Accesorio oficial.', '<?= $prod['imagen'] ?>', <?= $tieneTalla ?>)">
+                    <img src="<?= $prod['imagen'] ?>" alt="<?= $nombreJS ?>">
                     <div class="info-overlay">
-                        <h3>Termo Escolar</h3>
-                        <p class="precio">$220.00</p>
+                        <h3><?= $prod['nombre'] ?></h3>
+                        <p class="precio">$<?= number_format($prod['precio'], 2) ?></p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+            <?php endif; ?>
+
+        <?php endforeach; ?>
+        
+        </div> </div>
 </section>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="view/js/tienda.js"></script>
 <div id="modalProducto" class="modal-fondo">
     <div class="modal-contenido">
         <span class="cerrar-modal" onclick="cerrarModal()">&times;</span>
