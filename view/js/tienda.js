@@ -1,128 +1,129 @@
-// 1. Variables globales
+// Variables globales
 let carrito = [];
+let productoActualId = null;
 
-// 2. Funciones del Modal de Detalles
-function abrirModal(nombre, precio, desc, imagen, tieneTalla) {
-    
+// ==================== MODAL DE PRODUCTO ====================
+function abrirModal(nombre, precio, desc, imagen, tieneTalla, id) {
     const modal = document.getElementById('modalProducto');
-
+    productoActualId = id;  // Guardar el ID globalmente
+    
     document.getElementById('tituloModal').innerText = nombre;
     document.getElementById('precioModal').innerText = precio;
     document.getElementById('descModal').innerText = desc;
     document.getElementById('imgModal').src = imagen;
-
-const contenedorTalla = document.getElementById('contenedorTalla');
-
+    
+    const contenedorTalla = document.getElementById('contenedorTalla');
     if (contenedorTalla) {
-    if (tieneTalla) {
-        contenedorTalla.style.display = 'block';
-    } else {
-        contenedorTalla.style.display = 'none';
+        contenedorTalla.style.display = tieneTalla ? 'block' : 'none';
     }
-
-    // Resetear selección
+    
+    // Resetear cantidad
+    const inputCant = document.getElementById('cantidadProducto');
+    if(inputCant) inputCant.value = 1;
+    
+    // Resetear talla seleccionada
     const inputTalla = document.getElementById('tallaSeleccionada');
-    if (inputTalla) inputTalla.value = '';
-
+    if(inputTalla) inputTalla.value = '';
+    
     document.querySelectorAll('.talla-btn').forEach(btn => {
         btn.classList.remove('active');
     });
-}
-
-    // SOLUCIÓN DILEMA 1: Resetear el input de cantidad a 1 siempre que se abra el modal
-    const inputCant = document.querySelector('#modalProducto input[type="number"]');
-    if(inputCant) inputCant.value = 1;
     
-    modal.style.display = 'block';
+    modal.style.display = 'flex';
 }
 
 function cerrarModal() {
     document.getElementById('modalProducto').style.display = 'none';
 }
 
-// 3. Funciones del Carrito Lateral
+// Selección de talla
+$(document).on('click', '.talla-btn', function() {
+    $('.talla-btn').removeClass('active');
+    $(this).addClass('active');
+    $('#tallaSeleccionada').val($(this).data('talla'));
+});
+
+// ==================== CARRITO ====================
 function toggleCarrito(event) {
-    if (event) event.stopPropagation(); // Evita que el clic llegue a la ventana 'window'
-    
+    if (event) event.stopPropagation();
     const elementoCarrito = document.getElementById('carrito-lateral');
     if (elementoCarrito) {
         elementoCarrito.classList.toggle('active');
-        console.log("Clase active aplicada:", elementoCarrito.classList.contains('active'));
-    } else {
-        console.error("No se encontró el ID 'carrito-lateral'");
     }
 }
 
-function agregarAlCarrito(id) {
-    // Obtenemos los datos actuales del modal
+function agregarAlCarrito() {
     const nombre = document.getElementById('tituloModal').innerText;
     const precioTexto = document.getElementById('precioModal').innerText;
-    const precio = parseFloat(precioTexto.replace(/[^\d.]/g, '')); // Limpieza más segura del precio
+    const precio = parseFloat(precioTexto.replace(/[^\d.]/g, ''));
     const imagen = document.getElementById('imgModal').src;
-    
-    // SOLUCIÓN DILEMA 2: Obtener la cantidad real del input
-    const cantidad = parseInt(document.querySelector('#modalProducto input[type="number"]').value) || 1;
-
+    const cantidad = parseInt(document.getElementById('cantidadProducto').value) || 1;
     const talla = document.getElementById('tallaSeleccionada')?.value;
-
-const contenedorTalla = document.getElementById('contenedorTalla');
-
-if (contenedorTalla && contenedorTalla.style.display !== 'none' && !talla) {
-    alert("Selecciona una talla");
-    return;
-}
-
-    // Buscamos si el producto ya existe para no duplicar filas
-    const indiceExistente = carrito.findIndex(prod => prod.nombre === nombre);
-
+    
+    // Obtener el ID del producto actual
+    const id = productoActualId;
+    
+    const contenedorTalla = document.getElementById('contenedorTalla');
+    if (contenedorTalla && contenedorTalla.style.display !== 'none' && !talla) {
+        alert("❌ Por favor selecciona una talla");
+        return;
+    }
+    
+    // Buscar si ya existe (mismo nombre y misma talla)
+    const indiceExistente = carrito.findIndex(prod => prod.nombre === nombre && prod.talla === talla);
+    
     if (indiceExistente !== -1) {
-        // Si ya existe, sumamos la cantidad seleccionada a la que ya teníamos
         carrito[indiceExistente].cantidad += cantidad;
     } else {
-        // Si es nuevo, lo agregamos con la propiedad cantidad
-        const producto = { nombre, precio, imagen, cantidad: cantidad };
-        carrito.push(producto);
+        carrito.push({ 
+            id: id,  // Guardar el ID
+            nombre, 
+            precio, 
+            imagen, 
+            cantidad, 
+            talla 
+        });
     }
-
-    // Actualizamos la vista
+    
+    console.log("Carrito actualizado:", carrito); // Para depuración
+    
     actualizarInterfazCarrito();
     cerrarModal();
-    toggleCarrito(); 
+    toggleCarrito();
 }
 
 function actualizarInterfazCarrito() {
     const lista = document.getElementById('lista-carrito');
-    const contador = document.getElementById('contador-carrito');
     const totalElem = document.getElementById('total-carrito');
     
     lista.innerHTML = '';
     let totalPrecio = 0;
     let totalUnidades = 0;
-
+    
     if (carrito.length === 0) {
-        lista.innerHTML = '<p class="carrito-vacio">Tu carrito está vacío.</p>';
+        lista.innerHTML = '<p class="carrito-vacio">🛍️ Tu carrito está vacío</p>';
     } else {
         carrito.forEach((prod, index) => {
             const subtotal = prod.precio * prod.cantidad;
             totalPrecio += subtotal;
-            totalUnidades += prod.cantidad; // El contador de la navbar sumará unidades totales
-
+            totalUnidades += prod.cantidad;
+            
             lista.innerHTML += `
-                <div class="item-carrito" style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                    <img src="${prod.imagen}" width="50" height="50" style="object-fit: cover; border-radius: 4px;">
-                    <div style="flex: 1;">
-                        <p style="margin:0; font-weight:bold; font-size: 0.9rem;">${prod.nombre}</p>
-                        <p style="margin:0; color: #666; font-size: 0.8rem;">
-                            ${prod.cantidad} x $${prod.precio.toFixed(2)} = <strong>$${subtotal.toFixed(2)}</strong>
-                        </p>
+                <div class="item-carrito">
+                    <img src="${prod.imagen}" alt="${prod.nombre}">
+                    <div class="item-carrito-info">
+                        <p>${prod.nombre}</p>
+                        <small>${prod.talla ? 'Talla: ' + prod.talla : ''}</small>
+                        <p>${prod.cantidad} x $${prod.precio.toFixed(2)} = <strong>$${subtotal.toFixed(2)}</strong></p>
                     </div>
-                    <button onclick="eliminarDelCarrito(${index})" style="background:none; border:none; color:red; cursor:pointer; font-size: 1.2rem;">&times;</button>
+                    <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">&times;</button>
                 </div>
             `;
         });
     }
-
-    // Actualizamos el número en la Navbar (unidades totales) y el total monetario
+    
+    // Actualizar badge del carrito en navbar si existe
+    const contador = document.getElementById('contador-carrito');
     if(contador) contador.innerText = totalUnidades;
     if(totalElem) totalElem.innerText = totalPrecio.toFixed(2);
 }
@@ -132,101 +133,222 @@ function eliminarDelCarrito(index) {
     actualizarInterfazCarrito();
 }
 
-// 4. Cerrar modal o carrito de forma segura
+// Cerrar modal al hacer clic fuera
 window.addEventListener('click', function(event) {
     const modal = document.getElementById('modalProducto');
-    const carrito = document.getElementById('carrito-lateral');
+    const carritoElem = document.getElementById('carrito-lateral');
     
-    // Cerrar modal si se hace clic fuera del contenido
-    if (event.target == modal) {
+    if (event.target === modal) {
         cerrarModal();
     }
     
-    // Cerrar carrito si se hace clic fuera de él mientras está activo
-    if (carrito && carrito.classList.contains('active') && !carrito.contains(event.target)) {
-        // Solo cerramos si el clic NO fue en el botón que lo abre (para evitar conflicto)
+    if (carritoElem && carritoElem.classList.contains('active') && !carritoElem.contains(event.target)) {
         if (!event.target.closest('.icono-carrito') && !event.target.closest('#carrito-lateral')) {
-            carrito.classList.remove('active');
+            carritoElem.classList.remove('active');
         }
     }
 });
 
-// =========================
-// FUNCIONES DE PAGO
-// =========================
-
+// ==================== PAGO ====================
 let metodoPago = "";
 
-// Abrir modal
 function abrirModalPago() {
-    document.getElementById('modalPago').style.display = 'block';
+    if (carrito.length === 0) {
+        alert("🛒 El carrito está vacío");
+        return;
+    }
+    document.getElementById('modalPago').style.display = 'flex';
 }
 
-// Cerrar modal
 function cerrarModalPago() {
     document.getElementById('modalPago').style.display = 'none';
 }
 
-// Seleccionar método
 function seleccionarPago(metodo) {
     metodoPago = metodo;
-    document.getElementById('metodoSeleccionado').innerText = "Seleccionado: " + metodo;
+    document.getElementById('metodoSeleccionado').innerHTML = "✅ Seleccionado: " + metodo;
 }
 
-// Confirmar compra
 function confirmarCompra() {
-
     if (carrito.length === 0) {
-    alert("El carrito está vacío");
-    return;
-}
-
-    if (carrito.length === 0) {
-        alert("El carrito está vacío");
+        alert("🛒 El carrito está vacío");
         return;
     }
-
+    
+    if (!metodoPago) {
+        alert("❌ Por favor selecciona un método de pago");
+        return;
+    }
+    
+    // Preparar los datos del carrito para enviar
+    const datosCarrito = carrito.map(item => ({
+        id: item.id || null,
+        nombre: item.nombre,
+        cantidad: item.cantidad,
+        precio: item.precio,
+        talla: item.talla || null
+    }));
+    
+    console.log("Enviando carrito:", datosCarrito); // Para depuración
+    
     $.ajax({
         url: "/proyectopaginaescolar/ajax/comprar_carrito.php",
         type: "POST",
-        data: {
-            carrito: JSON.stringify(carrito)
-        },
-
+        contentType: "application/json", // Enviar como JSON
+        data: JSON.stringify({ carrito: datosCarrito }),
+        dataType: "json",
+        
         success: function(respuesta) {
-
+            console.log("Respuesta:", respuesta);
+            
             if (respuesta.status === "success") {
-
-                alert("✅ Compra realizada correctamente");
-
-                localStorage.removeItem("carrito"); // 🧹 limpiar carrito
+                alert("✅ " + respuesta.message);
+                // Vaciar carrito
+                carrito = [];
+                actualizarInterfazCarrito();
                 cerrarModalPago();
-
-                location.reload();
-
+                // Actualizar badge del carrito
+                const contador = document.getElementById('contador-carrito');
+                if(contador) contador.innerText = "0";
             } else {
                 alert("❌ " + respuesta.message);
             }
         },
-
-        error: function() {
-            alert("❌ Error en la compra");
+        
+        error: function(xhr, status, error) {
+            console.error("Error detallado:", {
+                status: xhr.status,
+                statusText: xhr.statusText,
+                responseText: xhr.responseText,
+                error: error
+            });
+            
+            let mensajeError = "Error en la compra. ";
+            try {
+                const respuesta = JSON.parse(xhr.responseText);
+                mensajeError += respuesta.message || "";
+            } catch(e) {
+                mensajeError += "Intenta nuevamente.";
+            }
+            alert("❌ " + mensajeError);
         }
     });
 }
 
-// tienda.js
-function abrirModal(nombre , precio, imagen, tieneTalla) {
-    document.getElementById('tituloModal').innerText = nombre;
-    document.getElementById('precioModal').innerText = precio;
-    document.getElementById('imgModal').src = imagen;
+// ==================== CARRUSEL HERO ====================
+let slideActual = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.dot');
+let intervaloAutomatico;
 
-
-    const contenedorTalla = document.getElementById('contenedorTalla');
-    if (contenedorTalla) {
-        // Si el producto tiene tallas en la BD, mostramos el selector
-        contenedorTalla.style.display = tieneTalla ? 'block' : 'none';
-    }
+function mostrarSlide(index) {
+    slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (dots[i]) dots[i].classList.remove('active');
+    });
     
-    document.getElementById('modalProducto').style.display = 'block';
+    slides[index].classList.add('active');
+    if (dots[index]) dots[index].classList.add('active');
+    slideActual = index;
+}
+
+function cambiarSlide(direccion) {
+    let nuevaPosicion = slideActual + direccion;
+    if (nuevaPosicion < 0) nuevaPosicion = slides.length - 1;
+    if (nuevaPosicion >= slides.length) nuevaPosicion = 0;
+    mostrarSlide(nuevaPosicion);
+    reiniciarAutomatico();
+}
+
+function irASlide(index) {
+    mostrarSlide(index);
+    reiniciarAutomatico();
+}
+
+function iniciarAutomatico() {
+    intervaloAutomatico = setInterval(() => {
+        cambiarSlide(1);
+    }, 5000);
+}
+
+function reiniciarAutomatico() {
+    clearInterval(intervaloAutomatico);
+    iniciarAutomatico();
+}
+
+// Iniciar carrusel automático
+if (slides.length > 0) {
+    iniciarAutomatico();
+    
+    // Pausar al hacer hover
+    const heroBanner = document.querySelector('.hero-banner');
+    if (heroBanner) {
+        heroBanner.addEventListener('mouseenter', () => clearInterval(intervaloAutomatico));
+        heroBanner.addEventListener('mouseleave', iniciarAutomatico);
+    }
+}
+
+// ==================== ELIMINAR PRODUCTO CON SWEETALERT ====================
+$(document).on("click", ".btn-eliminar", function() {
+    const id = $(this).attr("data-id");
+    const nombre = $(this).attr("data-nombre");
+    
+    Swal.fire({
+        title: '¿Eliminar producto?',
+        html: `Estás por eliminar <strong>${nombre}</strong><br>Esta acción no se puede deshacer.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "/proyectopaginaescolar/ajax/eliminar_producto.php",
+                type: "POST",
+                data: { id: id },
+                dataType: "json",
+                success: function(respuesta) {
+                    if (respuesta.status === "success") {
+                        Swal.fire({
+                            title: '¡Eliminado!',
+                            text: respuesta.message,
+                            icon: 'success',
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Error', respuesta.message, 'error');
+                    }
+                },
+                error: function() {
+                    Swal.fire('Error', 'No se pudo eliminar el producto', 'error');
+                }
+            });
+        }
+    });
+});
+
+// ==================== BOTÓN DE INICIO CON SCROLL ====================
+const btnInicio = document.querySelector('.btn-inicio-flotante');
+
+if (btnInicio) {
+    // Ocultar al inicio
+    btnInicio.style.opacity = '0';
+    btnInicio.style.visibility = 'hidden';
+    btnInicio.style.transition = 'all 0.3s ease';
+    
+    // Mostrar después de scroll
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            btnInicio.style.opacity = '1';
+            btnInicio.style.visibility = 'visible';
+        } else {
+            btnInicio.style.opacity = '0';
+            btnInicio.style.visibility = 'hidden';
+        }
+    });
 }
