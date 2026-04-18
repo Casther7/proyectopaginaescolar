@@ -7,7 +7,6 @@ CREATE TABLE administradores (
     usuario VARCHAR(50) NOT NULL,
     password VARCHAR(50) NOT NULL
 );
-
 -- Insertamos tu usuario de prueba
 INSERT INTO administradores (nombre, usuario, password) 
 VALUES ('Director General', 'admin', '12345');
@@ -23,7 +22,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
 );
 
 ---ejecuten este en su BD para agregar un usuario de prueba
-
 INSERT INTO usuarios (nombre, email, password, rol)
 VALUES
 ('sara', 'sara@gmail.com', '12345', 'docente');
