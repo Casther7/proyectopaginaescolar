@@ -261,7 +261,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevo_nombre'])) {
     <script src="view/js/admin.js"></script>
     <script src="view/js/admin_informacion.js"></script>
     <script src="view/js/admin_noticias.js"></script>
-    <script src="view/js/admin_banners.js"></script>
+    <script src="view/js/admin_banner.js"></script>
     <script src="view/js/admin_oferta.js"></script>
     <script src="view/js/admin_contacto.js"></script>
 </body>
