@@ -1,5 +1,7 @@
 // Variables globales
-let carrito = [];
+if (typeof carrito === 'undefined') {
+    var carrito = []; 
+}
 let productoActualId = null;
 
 // ==================== MODAL DE PRODUCTO ====================

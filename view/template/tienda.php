@@ -26,7 +26,7 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <div class="hero-features">
                         <span>✓ Hasta 18 MSI</span>
                         <span>✓ Envío gratis</span>
-                        <span>✓ Garantía Suburbia</span>
+                        <span>✓ Garantía Escolar</span>
                     </div>
                     <button class="hero-btn" onclick="document.querySelector('.productos-grid').scrollIntoView({behavior: 'smooth'})">
                         Comprar ahora →

@@ -2,10 +2,11 @@
    SECCIÓN DE CONTACTO MODERNA
    ========================================== */
 .seccion-contacto-moderna {
-    background-color: #f8fafc; /* Fondo gris muy claro para contrastar con las otras secciones */
+    background-color: #f8fafc;
     padding: 80px 20px;
     display: flex;
     justify-content: center;
+    font-family: sans-serif;
 }
 
 .contacto-wrapper {
@@ -13,7 +14,6 @@
     max-width: 1200px;
 }
 
-/* Títulos */
 .contacto-header {
     text-align: center;
     margin-bottom: 50px;
@@ -31,11 +31,10 @@
     font-size: 1.1rem;
 }
 
-/* Contenedor dividido en 2 columnas */
 .contacto-grid-2-col {
     display: grid;
-    grid-template-columns: 3fr 2fr; /* El formulario es un poco más ancho que la info */
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    grid-template-columns: 3fr 2fr;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     border-radius: 1rem;
     overflow: hidden;
     background-color: #ffffff;
@@ -76,31 +75,19 @@
     grid-column: span 2;
 }
 
-.contacto-input-group label {
-    color: #475569;
-    font-size: 0.85rem;
-    font-weight: 600;
-}
-
-.contacto-input,
-.contacto-select,
-.contacto-textarea {
+.contacto-input, .contacto-textarea {
     width: 100%;
     padding: 14px;
     border: 1px solid #cbd5e1;
     border-radius: 0.5rem;
     font-size: 1rem;
-    color: #1e293b;
     background-color: #f8fafc;
     transition: all 0.3s;
-    font-family: inherit;
 }
 
-.contacto-input:focus,
-.contacto-select:focus,
-.contacto-textarea:focus {
+.contacto-input:focus, .contacto-textarea:focus {
     outline: none;
-    border-color: #e53e3e; /* Tu rojo institucional */
+    border-color: #e53e3e;
     background-color: #ffffff;
     box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
 }
@@ -110,13 +97,8 @@
     min-height: 120px;
 }
 
-.contacto-btn-wrapper {
-    text-align: center;
-    margin-top: 35px;
-}
-
 .btn-enviar-rojo {
-    background-color: #e53e3e; /* Tu rojo institucional */
+    background-color: #e53e3e;
     color: white;
     border: none;
     padding: 15px 40px;
@@ -125,75 +107,56 @@
     border-radius: 9999px;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-top: 20px;
 }
 
 .btn-enviar-rojo:hover {
     background-color: #c53030;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
-}
-
-.campos-obligatorios-txt {
-    color: #94a3b8;
-    font-size: 0.8rem;
-    margin-top: 15px;
 }
 
 /* ================== COLUMNA DERECHA (INFORMACIÓN) ================== */
 .contacto-info-section {
-    background: linear-gradient(rgba(242, 242, 242, 0.9), rgba(215, 215, 210, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200') center/cover;
-    height: 100vh;
+    /* Fondo oscuro con overlay para que el texto blanco resalte */
+    background: linear-gradient(rgba(30, 41, 59, 0.9), rgba(30, 41, 59, 0.9)), 
+                url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200') center/cover;
     color: #ffffff;
     padding: 50px;
     display: flex;
     flex-direction: column;
 }
 
-.contacto-info-titulo {
-    color: #000000;
-    font-size: 1.6rem;
-    margin-bottom: 40px;
-    text-align: center;
-}
-
 .contacto-lista-detalles {
     list-style: none;
-    margin-bottom: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+    margin-bottom: 30px;
+    padding: 0;
 }
 
 .contacto-lista-item {
     display: flex;
     align-items: center;
+    margin-bottom: 25px;
     font-size: 0.95rem;
-    color: #000000;
-    line-height: 1.5;
 }
 
 .contacto-icono-circulo {
-    background-color: #e53e3e; /* Rojo institucional */
-    color: white;
+    background-color: #e53e3e;
     width: 45px;
     height: 45px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 20px;
+    margin-right: 15px;
     flex-shrink: 0;
-    font-size: 1.2rem;
 }
 
-/* Mapa simulado */
 .contacto-mapa-caja {
     width: 100%;
-    height: 180px;
-    border-radius: 0.75rem;
+    height: 150px;
+    border-radius: 0.5rem;
     overflow: hidden;
-    margin-bottom: 15px;
-    border: 3px solid rgba(255,255,255,0.1);
+    margin-top: auto; /* Empuja el mapa al fondo */
 }
 
 .contacto-mapa-caja img {
@@ -203,72 +166,17 @@
 }
 
 .contacto-link-mapa {
-    color: #93c5fd;
-    text-decoration: none;
-    font-size: 0.9rem;
+    color: #fca5a5;
     text-align: center;
-    display: block;
-    transition: color 0.2s;
+    margin-top: 10px;
+    text-decoration: none;
+    font-size: 0.85rem;
 }
 
-.contacto-link-mapa:hover {
-    color: #ffffff;
-    text-decoration: underline;
-}
-
-/* Para celulares */
+/* Responsive */
 @media (max-width: 900px) {
-    .contacto-grid-2-col {
-        grid-template-columns: 1fr;
-    }
-    .contacto-campos-grid {
-        grid-template-columns: 1fr;
-    }
-    .contacto-input-group.ancho-completo {
-        grid-column: span 1;
-    }
-}
-
-.parent {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.child {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform-style: preserve-3d;
-  transition: all 0.5s ease-in-out;
-  border-radius: 50%;
-  margin: 0 5px;
-}
-
-.child:hover {
-  background-color: white;
-  background-position: -100px 100px, -100px 100px;
-  transform: rotate3d(0.5, 1, 0, 30deg);
-  transform: perspective(180px) rotateX(60deg) translateY(2px);
-  box-shadow: 0px 10px 10px rgb(1, 49, 182);
-}
-
-button {
-  border: none;
-  background-color: transparent;
-  font-size: 20px;
-}
-
-.button:hover {
-  width: inherit;
-  height: inherit;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: translate3d(0px, 0px, 15px) perspective(180px) rotateX(-35deg) translateY(2px);
-  border-radius: 50%;
+    .contacto-grid-2-col { grid-template-columns: 1fr; }
+    .contacto-campos-grid { grid-template-columns: 1fr; }
+    .contacto-input-group.ancho-completo { grid-column: span 1; }
+    .contacto-info-section { order: -1; } /* Info arriba en móvil */
 }

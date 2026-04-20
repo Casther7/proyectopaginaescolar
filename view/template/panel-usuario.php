@@ -7,12 +7,23 @@ if (!isset($_SESSION['usuarioLogueado']) || $_SESSION['usuarioLogueado'] !== tru
 }
 
 require_once __DIR__ . '/../../model/MensajeModel.php';
+require_once __DIR__ . '/../../model/PermisosModel.php';
 
 $uNombre  = $_SESSION['usuarioNombre'];
 $uRol     = $_SESSION['usuarioRol'];
 $uFoto    = $_SESSION['usuarioFoto'];
 $uEmail   = $_SESSION['usuarioEmail'];
-$permisos = $_SESSION['usuarioPermisos'];
+$permisosSesion = isset($_SESSION['usuarioPermisos']) && is_array($_SESSION['usuarioPermisos'])
+    ? $_SESSION['usuarioPermisos']
+    : [];
+
+// Refrescar permisos en cada carga evita que el usuario tenga que cerrar sesion
+// cuando el admin cambia accesos.
+$permisos = PermisosModel::mdlObtenerPermisos((int)($_SESSION['usuarioId'] ?? 0));
+if (!is_array($permisos)) {
+    $permisos = $permisosSesion;
+}
+$_SESSION['usuarioPermisos'] = $permisos;
 
 // Helper
 function puede($permisos, $clave) {
@@ -30,6 +41,7 @@ if (puede($permisos,'p_banner') || puede($permisos,'p_nosotros') || puede($permi
 if (puede($permisos,'p_mensajes'))         $menu[] = ['id' => 'mensajes',  'icon' => '✉️',  'label' => 'Mensajes'];
 if (puede($permisos,'p_tienda'))           $menu[] = ['id' => 'tienda',    'icon' => '🛒',  'label' => 'Tienda'];
 if (puede($permisos,'p_usuarios_accesos')) $menu[] = ['id' => 'usuarios',  'icon' => '👥',  'label' => 'Usuarios'];
+if (puede($permisos,'p_usuarios_accesos')) $menu[] = ['id' => 'accesos',   'icon' => '🔐',  'label' => 'Accesos'];
 
 $totalNoLeidos = MensajeModel::mdlContarNoLeidos();
 
@@ -164,40 +176,34 @@ $primeraVista = !empty($menu) ? $menu[0]['id'] : 'sin-accesos';
         </div>
     </div>
 
+    <!-- VISTA: Mensajes -->
+    <?php if (puede($permisos,'p_mensajes')): ?>
+    <?php include __DIR__ . '/admin_modulos/admin_mensajes.php'; ?>
+    <?php endif; ?>
+
+    <!-- VISTA: Tienda -->
+    <?php if (puede($permisos,'p_tienda')): ?>
+    <?php include __DIR__ . '/admin_modulos/admin_tienda.php'; ?>
+    <?php endif; ?>
+
+    <!-- VISTA: Usuarios -->
+    <?php if (puede($permisos,'p_usuarios_accesos')): ?>
+    <?php include __DIR__ . '/admin_modulos/admin_usuarios.php'; ?>
+    <?php endif; ?>
+
+    <!-- VISTA: Accesos -->
+    <?php if (puede($permisos,'p_usuarios_accesos')): ?>
+    <?php include __DIR__ . '/admin_modulos/admin_accesos.php'; ?>
+    <?php endif; ?>
+
     <!-- VISTA: Diseño (admin_diseno.php ya contiene su propio div#vista-diseno) -->
     <?php if (puede($permisos,'p_banner') || puede($permisos,'p_nosotros') || puede($permisos,'p_oferta') ||
               puede($permisos,'p_docentes') || puede($permisos,'p_instalaciones') || puede($permisos,'p_contacto')): ?>
     <?php $permisosVista = $permisos; include __DIR__ . '/admin_modulos/admin_diseno.php'; unset($permisosVista); ?>
     <?php endif; ?>
 
-    <!-- VISTA: Mensajes -->
-    <?php if (puede($permisos,'p_mensajes')): ?>
-    <div id="vista-mensajes" class="dashboard-content" style="display:none;">
-        <?php include __DIR__ . '/admin_modulos/admin_mensajes.php'; ?>
-    </div>
-    <?php endif; ?>
-
-    <!-- VISTA: Tienda -->
-    <?php if (puede($permisos,'p_tienda')): ?>
-    <div id="vista-tienda" class="dashboard-content" style="display:none;">
-        <?php include __DIR__ . '/admin_modulos/admin_tienda.php'; ?>
-    </div>
-    <?php endif; ?>
-
-    <!-- VISTA: Usuarios -->
-    <?php if (puede($permisos,'p_usuarios_accesos')): ?>
-    <div id="vista-usuarios" class="dashboard-content" style="display:none;">
-        <?php include __DIR__ . '/admin_modulos/admin_usuarios.php'; ?>
-    </div>
-    <?php endif; ?>
-
 </main>
 
 <script src="view/js/admin.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    cambiarVista('inicio');
-});
-</script>
 </body>
 </html>
