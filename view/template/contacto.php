@@ -38,7 +38,7 @@ if(!$info) {
                     <div style="margin-bottom:14px;padding:10px 12px;border-radius:8px;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;">Error al enviar el mensaje.</div>
                 <?php endif; ?>
 
-                <form action="controller/contacto_handler.php" method="POST" class="contacto-form">
+                <form action="index.php?ruta=procesar-contacto" method="POST" class="contacto-form">
                     <div class="contacto-campos-grid">
                         <div class="contacto-input-group">
                             <label>Nombre Completo</label>
@@ -47,6 +47,10 @@ if(!$info) {
                         <div class="contacto-input-group">
                             <label>Correo Electrónico</label>
                             <input type="email" name="email" class="contacto-input" placeholder="juan@ejemplo.com" required>
+                        </div>
+                        <div class="contacto-input-group">
+                            <label>Telefono</label>
+                            <input type="tel" name="telefono" class="contacto-input" placeholder="Ej. 951 123 4567">
                         </div>
                         <div class="contacto-input-group ancho-completo">
                             <label>Asunto</label>
