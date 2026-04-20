@@ -17,7 +17,7 @@
                     <div class="instalacion-icono">
                         <i class="fas fa-desktop"></i>
                     </div>
-                    <h3 class="instalacion-titulo">Laboratorios de Cómputo</h3>
+                    <h3 class="instalacion-titulo">Laboratorios</h3>
                     <p class="instalacion-desc">Equipos de última generación con software especializado para ingeniería, diseño y programación.</p>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     <div class="instalacion-icono">
                         <i class="fas fa-basketball-ball"></i>
                     </div>
-                    <h3 class="instalacion-titulo">Complejo Deportivo</h3>
+                    <h3 class="instalacion-titulo">Espacios Deportivos</h3>
                     <p class="instalacion-desc">Canchas de usos múltiples, pista de atletismo y áreas verdes para fomentar tu bienestar físico.</p>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     <div class="instalacion-icono">
                         <i class="fas fa-book-reader"></i>
                     </div>
-                    <h3 class="instalacion-titulo">Biblioteca Central</h3>
+                    <h3 class="instalacion-titulo">Bibliotecas</h3>
                     <p class="instalacion-desc">Un espacio silencioso e inspirador con miles de volúmenes físicos y acceso a bases de datos digitales internacionales.</p>
                 </div>
             </div>
@@ -62,4 +62,20 @@
                 </div>
         </div>
     </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+
+<!-- 1. jQuery (OBLIGATORIO para tienda.js) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- 2. SweetAlert (porque lo usas en tienda.js) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- 3. Tu script de instalaciones -->
+<script src="view/js/instalaciones.js"></script>
+
+<!-- 4. Tu tienda (SIEMPRE al final) -->
+<script src="view/js/tienda.js"></script>
+
+</body>
 </section>

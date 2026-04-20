@@ -1,238 +1,318 @@
+<?php
+// 1. Importar el modelo de contacto
+require_once "model/ContactoModel.php";
+
+// 2. Obtener los datos actuales para llenar los inputs del formulario
+$infoContacto = ContactoModel::mdlObtenerContacto();
+
+// Si la tabla está vacía, creamos valores por defecto para que no falle el formulario
+if(!$infoContacto){
+    $infoContacto = [
+        'telefono' => '',
+        'correo' => '',
+        'ubicacion' => '',
+        'horario' => ''
+    ];
+}
+?>
+
 <?php $__mostrarTodo = !isset($permisosVista); ?>
+
 <div id="vista-diseno" class="dashboard-content" style="display: none;">
     <h1 class="page-title">🎨 Editar Página Principal</h1>
-    <p style="color: var(--texto-gris); margin-bottom: 30px;">Actualiza los textos e imágenes que ven los visitantes en la página pública.</p>
+    <p style="color: var(--texto-gris); margin-bottom: 30px;">
+        Actualiza los textos e imágenes que ven los visitantes en la página pública.
+    </p>
     
     <form action="#" method="POST" enctype="multipart/form-data">
 
+        <!-- ==================== BANNER ==================== -->
         <?php if ($__mostrarTodo || !empty($permisosVista['p_banner'])): ?>
-        <div class="card form-card">
-            <h3 class="form-section-title">🖼️ Banner Principal (Inicio)</h3>
-            
-            <div class="form-group">
-                <label>Título Principal</label>
-                <input type="text" name="hero_titulo" value="Formando a los líderes del mañana" class="input-admin">
-            </div>
-            <div class="form-group">
-                <label>Subtítulo / Descripción</label>
-                <textarea name="hero_subtitulo" rows="3" class="input-admin">Inscripciones abiertas para el nuevo ciclo escolar.</textarea>
-            </div>
+<div class="card form-card">
+    <h3 class="form-section-title">🖼️ Banner Principal (Hero)</h3>
+    <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 15px;">Cambia el impacto visual de tu página de inicio.</p>
 
-            <div class="form-media-banner-grid">
-                <div class="form-media-banner-group">
-                    <div class="banner-preview-circle"><span>🖼️</span></div>
-                    <div class="media-upload-texts">
-                        <h4>Imagen de Fondo (Fija)</h4>
-                        <p>Sube una imagen de alta calidad.</p>
-                        <label for="banner_imagen" class="label-archivo-custom">Elegir Imagen</label>
-                        <input type="file" name="banner_imagen" id="banner_imagen" class="input-archivo-oculto" accept="image/*">
-                    </div>
-                </div>
+    <div class="form-group">
+        <label>Título de Bienvenida</label>
+        <input type="text" id="hero_titulo" class="input-admin" placeholder="Ej: Formando líderes">
+    </div>
 
-                <div class="form-media-banner-group">
-                    <div class="banner-preview-circle"><span>📹</span></div>
-                    <div class="media-upload-texts">
-                        <h4>Video de Fondo (Opcional)</h4>
-                        <p>Sube un video corto y ligero.</p>
-                        <label for="banner_video" class="label-archivo-custom">Elegir Video</label>
-                        <input type="file" name="banner_video" id="banner_video" class="input-archivo-oculto" accept="video/*">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php endif; ?>
+    <div class="form-group">
+        <label>Subtítulo o Descripción</label>
+        <textarea id="hero_subtitulo" class="input-admin" rows="2"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Tipo de fondo</label>
+        <select id="hero_tipo" class="input-admin" onchange="toggleInputBanner()">
+            <option value="imagen">Imagen Estática</option>
+            <option value="video">Video (MP4)</option>
+        </select>
+    </div>
+
+    <div class="form-group" id="cont-input-img">
+        <label>Seleccionar Imagen</label>
+        <input type="file" id="hero_archivo_img" class="input-admin" accept="image/*">
+    </div>
+
+    <div class="form-group" id="cont-input-vid" style="display:none;">
+        <label>Seleccionar Video (Recomendado: MP4 ligero)</label>
+        <input type="file" id="hero_archivo_vid" class="input-admin" accept="video/mp4">
+    </div>
+
+    <button type="button" id="btnGuardarHero" class="btn-guardar" style="background:#2c3e50;">Actualizar Banner</button>
+</div>
+
+<script>
+// Función simple para mostrar el input correcto
+function toggleInputBanner() {
+    const tipo = document.getElementById('hero_tipo').value;
+    document.getElementById('cont-input-img').style.display = (tipo === 'imagen') ? 'block' : 'none';
+    document.getElementById('cont-input-vid').style.display = (tipo === 'video') ? 'block' : 'none';
+}
+</script>
+<?php endif; ?>
+
+        <!--=====================(Nosotros)===================== -->
 
         <?php if ($__mostrarTodo || !empty($permisosVista['p_nosotros'])): ?>
         <div class="card form-card" style="margin-top: 25px;">
-            <h3 class="form-section-title">🏫 Nosotros y Valores</h3>
-            <div class="form-grid-2">
-                <div class="form-group">
-                    <label>Texto de Misión</label>
-                    <textarea name="texto_mision" rows="3" class="input-admin">Brindar una educación integral de excelencia...</textarea>
-                </div>
-                <div class="form-group">
-                    <label>Texto de Visión</label>
-                    <textarea name="texto_vision" rows="3" class="input-admin">Ser la institución educativa líder en innovación...</textarea>
-                </div>
-                <div class="form-group">
-                    <label>Política de la Calidad</label>
-                    <textarea name="texto_calidad" rows="3" class="input-admin">Compromiso con la mejora continua de nuestros procesos...</textarea>
-                </div>
-                <div class="form-group">
-                    <label>Historia</label>
-                    <textarea name="texto_historia" rows="3" class="input-admin">Fundada hace más de 50 años, nuestra institución...</textarea>
-                </div>
+            <h3 class="form-section-title">📖 Nuestros valores</h3>
+            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 15px;">Modifica los textos institucionales que se muestran en la sección Nosotros.</p>
+
+            <div class="form-group" style="margin-bottom: 25px; border-bottom: 1px solid #f1f1f1; padding-bottom: 20px;">
+                <label><strong>Misión Institucional</strong></label>
+                <textarea id="texto_mision" class="input-admin" rows="4" placeholder="Escribe aquí la misión..."></textarea>
+                <button type="button" class="btn-guardar-info" data-slug="mision" style="margin-top: 10px; background-color: #2c3e50; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">Actualizar Misión</button>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 25px; border-bottom: 1px solid #f1f1f1; padding-bottom: 20px;">
+                <label><strong>Visión Institucional</strong></label>
+                <textarea id="texto_vision" class="input-admin" rows="4" placeholder="Escribe aquí la visión..."></textarea>
+                <button type="button" class="btn-guardar-info" data-slug="vision" style="margin-top: 10px; background-color: #2c3e50; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">Actualizar Visión</button>
+            </div>
+
+            <div class="form-group">
+                <label><strong>Nuestra Historia</strong></label>
+                <textarea id="texto_historia" class="input-admin" rows="4" placeholder="Escribe aquí la reseña histórica..."></textarea>
+                <button type="button" class="btn-guardar-info" data-slug="historia" style="margin-top: 10px; background-color: #2c3e50; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">Actualizar Historia</button>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <!--     ============= Estadisticas al lado de nosotros ====================-->
+
+        <?php if ($__mostrarTodo || !empty($permisosVista['p_nosotros'])): ?>
+        <div class="card form-card" style="margin-top: 25px;">
+            <h3 class="form-section-title">📖 Sobre nosotros</h3>
+    
+            <h4 style="margin-bottom: 15px; color: #1e3a6e;">▶ Sobre Nosotros</h4>
+    
+            <div class="form-group">
+                <label>Texto Superior</label>
+                <textarea id="texto_nosotros_desc_top" class="input-admin" rows="3"></textarea>
+                <button type="button" class="btn-guardar-info" data-slug="nosotros_desc_top" style="margin-top:5px; background:#2c3e50; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Guardar Texto</button>
+            </div>
+
+            <div class="form-group" style="display:flex; gap:10px;">
+                <div style="flex:1;">
+                <label>Punto Lista 1 (🎓)</label>
+                <input type="text" id="texto_nosotros_item1" class="input-admin">
+                <button type="button" class="btn-guardar-info" data-slug="nosotros_item1" style="margin-top:5px; background:#2c3e50; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Guardar Pt. 1</button>
+            </div>
+            <div style="flex:1;">
+                <label>Punto Lista 2 (💻)</label>
+                <input type="text" id="texto_nosotros_item2" class="input-admin">
+                <button type="button" class="btn-guardar-info" data-slug="nosotros_item2" style="margin-top:5px; background:#2c3e50; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Guardar Pt. 2</button>
+            </div>
+            <div style="flex:1;">
+                <label>Punto Lista 3 (🏛️)</label>
+                <input type="text" id="texto_nosotros_item3" class="input-admin">
+                <button type="button" class="btn-guardar-info" data-slug="nosotros_item3" style="margin-top:5px; background:#2c3e50; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Guardar Pt. 3</button>
             </div>
         </div>
 
-        <?php endif; ?>
+        <div class="form-group" style="margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 20px;">
+            <label>Texto Inferior</label>
+            <textarea id="texto_nosotros_desc_bottom" class="input-admin" rows="2"></textarea>
+            <button type="button" class="btn-guardar-info" data-slug="nosotros_desc_bottom" style="margin-top:5px; background:#2c3e50; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Guardar Texto</button>
+        </div>
+        <?php endif; ?>   
+    
+
+        <!-- ==================== INSTALACIONES ==================== -->
+        <?php if ($__mostrarTodo || !empty($permisosVista['p_instalaciones'])): ?>
+            <div class="card form-card" style="margin-top: 25px;">
+    <h3 class="form-section-title">🏢 Instalaciones</h3>
+    
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        
+        <div class="form-group" style="flex: 1; min-width: 250px;">
+            <label>Categoría (Sección)</label>
+            <select id="inst_seccion" class="input-admin">
+                <option value="laboratorios">Laboratorios</option>
+                <option value="deportes">Deportes</option>
+                <option value="biblioteca">Biblioteca</option>
+            </select>
+        </div>
+
+        <div class="form-group" style="flex: 1; min-width: 250px;">
+            <label>Nombre del espacio</label>
+            <input type="text" id="inst_titulo" class="input-admin" placeholder="Ej: Laboratorio de Redes">
+        </div>
+
+        <div class="form-group" style="width: 100%;">
+            <label>Descripción</label>
+            <textarea id="inst_subtitulo" class="input-admin" rows="2"></textarea>
+        </div>
+
+        <div class="form-group" style="width: 100%;">
+            <label>Imagen</label>
+            <input type="file" id="inst_foto" accept="image/*" class="input-admin">
+        </div>
+
+        <button type="button" onclick="guardarInstalacion()" class="btn-guardar" style="background: #2563eb;">
+            🚀 Guardar en Instalaciones
+        </button>
+    </div>
+</div>
+<?php endif; ?>
+
+        <!-- ==================== OFERTA ==================== -->
         <?php if ($__mostrarTodo || !empty($permisosVista['p_oferta'])): ?>
         <div class="card form-card" style="margin-top: 25px;">
-            <h3 class="form-section-title">🎒 Oferta Académica</h3>
-            <p style="font-size: 0.85rem; color: var(--texto-gris); margin-bottom: 15px;">Selecciona una carrera existente para modificarla o agrega una nueva.</p>
+            <h3 class="form-section-title">🎓 Gestión de Oferta Académica</h3>
+            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 20px;">Registra los detalles de las carreras para que aparezcan en el slider y el modal.</p>
             
-            <div class="form-group">
-                <label>Nivel o Carrera a editar</label>
-                <select id="selector-carrera" name="carrera_seleccionada" class="select-admin">
-                    <option value="1">Ingeniería en Robótica</option>
-                    <option value="2">Licenciatura en Negocios Digitales</option>
-                    <option value="nueva" class="opcion-destacada">➕ Agregar nueva carrera...</option>
-                </select>
-            </div>
-
-            <div class="sub-form-container" id="contenedor-edicion-carrera">
-                <h4 class="sub-form-title">📝 Diseño de la Tarjeta Principal</h4>
-                <div class="form-grid-2">
+            <form id="formNuevaOferta" enctype="multipart/form-data">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
                     <div class="form-group">
-                        <label>Imagen Principal (Tarjeta)</label>
-                        <input type="file" name="edit_img_principal" class="input-admin" accept="image/*">
+                        <label>Nivel (Ej: Ingeniería, Licenciatura)</label>
+                        <input type="text" id="of_nivel" class="input-admin" placeholder="Ingeniería">
                     </div>
                     <div class="form-group">
-                        <label>Nivel Educativo</label>
-                        <input type="text" id="edit_nivel" name="edit_nivel" value="Ingeniería" class="input-admin">
-                    </div>
-                    <div class="form-group" style="grid-column: span 2;">
                         <label>Nombre de la Carrera</label>
-                        <input type="text" id="edit_nombre" name="edit_nombre" value="Robótica" class="input-admin">
-                    </div>
-                    <div class="form-group" style="grid-column: span 2;">
-                        <label>Descripción Corta (Para la tarjeta exterior)</label>
-                        <textarea id="edit_desc_corta" name="edit_desc_corta" rows="2" class="input-admin">Diseña, construye y programa sistemas automatizados...</textarea>
+                        <input type="text" id="of_titulo" class="input-admin" placeholder="Ing. en Sistemas">
                     </div>
                 </div>
 
-                <h4 class="sub-form-title" style="margin-top: 30px;">🔍 Información de la Ventana Flotante (Pestañas)</h4>
-                <div class="form-grid-2">
-                    <div class="form-group" style="grid-column: span 2;">
-                        <label>Imágenes para el Carrusel (Sube múltiples fotos)</label>
-                        <input type="file" name="edit_carrusel[]" class="input-admin" multiple accept="image/*">
-                        <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">*Puedes seleccionar varias imágenes a la vez.</p>
+                <div class="form-group">
+                    <label>Descripción corta (Para la tarjeta del slider)</label>
+                    <textarea id="of_desc_corta" class="input-admin" rows="2"></textarea>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                    <div class="form-group">
+                        <label>Imagen Principal (Icono)</label>
+                        <input type="file" id="of_archivo_principal" class="input-admin" accept="image/*">
                     </div>
                     <div class="form-group">
+                        <label>Galería (Selecciona varias fotos)</label>
+                        <input type="file" id="of_galeria" class="input-admin" accept="image/*" multiple>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                    <div class="form-group">
                         <label>Misión de la Carrera</label>
-                        <textarea id="edit_mision" name="edit_mision" rows="3" class="input-admin">Formar profesionales capaces de...</textarea>
+                        <textarea id="of_mision" class="input-admin" rows="3"></textarea>
                     </div>
                     <div class="form-group">
                         <label>Visión de la Carrera</label>
-                        <textarea id="edit_vision" name="edit_vision" rows="3" class="input-admin">Ser el programa líder en innovación...</textarea>
+                        <textarea id="of_vision" class="input-admin" rows="3"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label>Objetivo General</label>
-                        <textarea id="edit_objetivo" name="edit_objetivo" rows="3" class="input-admin">Capacitar al estudiante en...</textarea>
-                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Objetivo General</label>
+                    <textarea id="of_objetivo" class="input-admin" rows="2"></textarea>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                     <div class="form-group">
                         <label>Perfil de Egreso</label>
-                        <textarea id="edit_perfil" name="edit_perfil" rows="3" class="input-admin">El egresado será capaz de diseñar...</textarea>
+                        <textarea id="of_perfil" class="input-admin" rows="3"></textarea>
                     </div>
-                    <div class="form-group" style="grid-column: span 2;">
+                    <div class="form-group">
                         <label>Campo Laboral</label>
-                        <textarea id="edit_campo" name="edit_campo" rows="2" class="input-admin">Empresas de software, telecomunicaciones...</textarea>
+                        <textarea id="of_campo" class="input-admin" rows="3"></textarea>
                     </div>
                 </div>
 
-                <div style="margin-top: 25px; text-align: right;">
-                    <button type="button" class="btn-guardar" style="background-color: var(--azul-acento);">💾 Guardar Carrera</button>
-                </div>
-            </div>
-        </div>
+                <button type="button" id="btnGuardarOferta" class="btn-guardar" style="background:#2980b9; margin-top: 20px;">Publicar Carrera</button>
+            </form>
 
+            <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
+            <div id="listaOfertaAdmin"></div>
+        </div>
         <?php endif; ?>
 
-        <?php if ($__mostrarTodo || !empty($permisosVista['p_oferta'])): ?>
+        <!-- ==================== NOTICIAS ==================== -->
         <div class="card form-card" style="margin-top: 25px;">
-            <h3 class="form-section-title">📰 Gestión de Noticias</h3>
-            <p style="font-size: 0.85rem; color: var(--texto-gris); margin-bottom: 15px;">Agrega o edita las noticias que aparecen en la página principal.</p>
-            
-            <div class="form-group">
-                <label>Noticia a editar</label>
-                <select id="selector-noticia" name="noticia_seleccionada" class="select-admin">
-                    <option value="1">Gran éxito en la Feria de Ciencias</option>
-                    <option value="2">Inauguración de laboratorios</option>
-                    <option value="nueva" class="opcion-destacada">➕ Redactar nueva noticia...</option>
+    <h3 class="form-section-title">📰 Publicar Nueva Noticia</h3>
+    <form id="formNuevaNoticia" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Título de la Noticia</label>
+            <input type="text" name="not_titulo" id="not_titulo" class="input-admin" required>
+        </div>
+        <div style="display:flex; gap:15px;">
+            <div class="form-group" style="flex:1;">
+                <label>Categoría</label>
+                <select name="not_categoria" id="not_categoria" class="input-admin">
+                    <option value="Académico">Académico</option>
+                    <option value="Deportes">Deportes</option>
+                    <option value="Cultura">Cultura</option>
+                    <option value="Avisos">Avisos</option>
                 </select>
             </div>
-
-            <div class="sub-form-container">
-                <div class="form-grid-2">
-                    <div class="form-group" style="grid-column: span 2;">
-                        <label>Título de la Noticia</label>
-                        <input type="text" name="noticia_titulo" value="Gran éxito en la Feria de Ciencias y Tecnología 2026" class="input-admin">
-                    </div>
-                    <div class="form-group">
-                        <label>Categoría (Ej. Académico, Avisos)</label>
-                        <input type="text" name="noticia_cat" value="Académico" class="input-admin">
-                    </div>
-                    <div class="form-group">
-                        <label>Fecha a mostrar</label>
-                        <input type="text" name="noticia_fecha" value="15 Mar" class="input-admin">
-                    </div>
-                    <div class="form-group" style="grid-column: span 2;">
-                        <label>Imagen de Portada</label>
-                        <input type="file" name="noticia_img" class="input-admin" accept="image/*">
-                    </div>
-                    <div class="form-group" style="grid-column: span 2;">
-                        <label>Contenido Completo (Descripción)</label>
-                        <textarea name="noticia_desc" rows="5" class="input-admin">Nuestros alumnos presentaron más de 50 proyectos de innovación agrícola, robótica y desarrollo sustentable ante la comunidad...</textarea>
-                    </div>
-                </div>
-                <div style="margin-top: 15px; text-align: right;">
-                    <button type="button" class="btn-guardar" style="background-color: #10b981;">💾 Publicar Noticia</button>
-                </div>
+            <div class="form-group" style="flex:1;">
+                <label>Fecha del Evento</label>
+                <input type="date" name="not_fecha" id="not_fecha" class="input-admin" required>
             </div>
         </div>
+        <div class="form-group">
+            <label>Imagen Portada</label>
+            <input type="file" name="not_archivo" id="not_archivo" class="input-admin" accept="image/*" required>
+        </div>
+        <div class="form-group">
+            <label>Contenido Completo</label>
+            <textarea name="not_descripcion" id="not_descripcion" class="input-admin" rows="5" required></textarea>
+        </div>
+        <button type="button" id="btnGuardarNoticia" class="btn-guardar" style="background:#2ecc71;">Publicar Noticia</button>
+    </form>
 
-        <?php endif; ?>
+    <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
+    <h3 class="form-section-title">Lista de Noticias Publicadas</h3>
+    <div id="listaNoticiasAdmin" style="margin-top:15px;">
+        </div>
+</div>
 
-        <?php if ($__mostrarTodo || !empty($permisosVista['p_instalaciones'])): ?>
+
+        <!-- ==================== CONTACTO ==================== -->
         <div class="card form-card" style="margin-top: 25px;">
-            <h3 class="form-section-title">🏢 Instalaciones Principales</h3>
-            <p style="font-size: 0.85rem; color: var(--texto-gris); margin-bottom: 15px;">Sube las fotos de fondo para tus 3 categorías principales.</p>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-                <div class="form-group">
-                    <label>Foto: Laboratorios</label>
-                    <input type="file" name="inst_lab_img" class="input-admin" accept="image/*">
-                    <input type="text" name="inst_lab_titulo" value="Laboratorios de Cómputo" class="input-admin" style="margin-top:10px;">
-                </div>
-                <div class="form-group">
-                    <label>Foto: Complejo Deportivo</label>
-                    <input type="file" name="inst_dep_img" class="input-admin" accept="image/*">
-                    <input type="text" name="inst_dep_titulo" value="Complejo Deportivo" class="input-admin" style="margin-top:10px;">
-                </div>
-                <div class="form-group">
-                    <label>Foto: Biblioteca</label>
-                    <input type="file" name="inst_bib_img" class="input-admin" accept="image/*">
-                    <input type="text" name="inst_bib_titulo" value="Biblioteca Central" class="input-admin" style="margin-top:10px;">
-                </div>
+    <h3 class="form-section-title">📞 Información de Contacto Directo</h3>
+    <form id="formUpdateContacto">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+            <div class="form-group">
+                <label>Teléfono de Atención</label>
+                <input type="text" id="con_tel" class="input-admin" value="<?php echo $infoContacto['telefono']; ?>">
             </div>
-            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 10px;">*Los sub-espacios de cada instalación se administrarán desde la base de datos.</p>
-        </div>
-
-        <?php endif; ?>
-
-        <?php if ($__mostrarTodo || !empty($permisosVista['p_contacto'])): ?>
-        <div class="card form-card" style="margin-top: 25px; margin-bottom: 25px;">
-            <h3 class="form-section-title">📞 Información de Contacto</h3>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-                <div class="form-group">
-                    <label>Teléfono Oficial</label>
-                    <input type="text" name="contacto_tel" value="(55) 1234-5678" class="input-admin">
-                </div>
-                <div class="form-group">
-                    <label>Correo Electrónico</label>
-                    <input type="email" name="contacto_email" value="contacto@miescuela.edu.mx" class="input-admin">
-                </div>
-                <div class="form-group">
-                    <label>Dirección Física</label>
-                    <input type="text" name="contacto_direccion" value="Av. Universidad #123, Centro" class="input-admin">
-                </div>
+            <div class="form-group">
+                <label>Correo Institucional</label>
+                <input type="email" id="con_correo" class="input-admin" value="<?php echo $infoContacto['correo']; ?>">
             </div>
         </div>
 
-        <?php endif; ?>
-
-        <div style="margin-top: 30px; text-align: right;">
-            <button type="button" class="btn-guardar">💾 Guardar Cambios Generales</button>
+        <div class="form-group">
+            <label>Horario (Ej: Lun-Vie 8am a 4pm)</label>
+            <input type="text" id="con_horario" class="input-admin" value="<?php echo $infoContacto['horario']; ?>">
         </div>
 
+        <div class="form-group">
+            <label>Dirección Completa</label>
+            <textarea id="con_ubicacion" class="input-admin" rows="2"><?php echo $infoContacto['ubicacion']; ?></textarea>
+        </div>
+
+        <button type="button" id="btnActualizarContacto" class="btn-guardar" style="background:#16a085;">Actualizar Información</button>
     </form>
 </div>

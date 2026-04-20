@@ -14,6 +14,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 require_once __DIR__ . '/../../model/UsuarioModel.php';
 require_once __DIR__ . '/../../model/MensajeModel.php';
+require_once __DIR__ . '/../../model/BannerModel.php';
 $totalNoLeidos = MensajeModel::mdlContarNoLeidos();
 
 // Manejar eliminación de usuario
@@ -258,5 +259,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevo_nombre'])) {
     </main>
 
     <script src="view/js/admin.js"></script>
+    <script src="view/js/admin_informacion.js"></script>
+    <script src="view/js/admin_noticias.js"></script>
+    <script src="view/js/admin_banners.js"></script>
+    <script src="view/js/admin_oferta.js"></script>
+    <script src="view/js/admin_contacto.js"></script>
 </body>
 </html>

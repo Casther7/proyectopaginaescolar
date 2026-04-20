@@ -99,7 +99,9 @@ if(isset($_GET["ruta"])){
 
 
     <script src="view/js/app.js"></script>
+    <?php if(!isset($_GET["ruta"]) || ($_GET["ruta"] != "admin" && $_GET["ruta"] != "panel-usuario")): ?>
     <script src="view/js/tienda.js"></script>
+    <?php endif; ?>
     <script>
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('.navbar');

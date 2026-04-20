@@ -69,8 +69,53 @@ document.addEventListener('DOMContentLoaded', () => {
     const vistasPermitidas = ['inicio', 'diseno', 'mensajes', 'tienda', 'usuarios', 'accesos'];
     const vistaInicial = vistasPermitidas.includes(vistaParam) ? vistaParam : 'inicio';
     cambiarVista(vistaInicial);
-
 });
+
+// --- FUNCIÓN PARA GUARDAR NUEVAS INSTALACIONES (Admin) ---
+// Actualiza esta parte en tu admin.js
+function guardarInstalacion() {
+    // Estos IDs deben existir en el HTML anterior
+    const elSeccion = document.getElementById('inst_seccion'); 
+    const elTitulo = document.getElementById('inst_titulo');
+    const elSubtitulo = document.getElementById('inst_subtitulo');
+    const elFoto = document.getElementById('inst_foto');
+
+    // Validación para que no truene si falta un campo
+    if (!elSeccion || !elTitulo || !elSubtitulo || !elFoto) {
+        alert("Error: No se encontraron los campos en el formulario.");
+        return;
+    }
+
+    if (elFoto.files.length === 0) {
+        alert("Debes seleccionar una imagen.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('action', 'agregar'); // Acción que recibe tu ajax_banners.php
+    formData.append('seccion', elSeccion.value);
+    formData.append('titulo', elTitulo.value);
+    formData.append('subtitulo', elSubtitulo.value);
+    formData.append('archivo', elFoto.files[0]);
+
+    fetch('/proyectopaginaescolar/ajax/ajax_banners.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert("Instalación guardada con éxito");
+            location.reload();
+        } else {
+            alert("Error: " + data.message);
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Error de conexión al servidor.");
+    });
+    }
 
 // --- 2. MOTOR DE CAMBIO DE VISTAS ---
 // Esta función va FUERA del DOMContentLoaded para que el HTML la pueda llamar
