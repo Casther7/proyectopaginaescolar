@@ -249,11 +249,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevo_nombre'])) {
 
         <?php 
             include __DIR__ . '/admin_modulos/admin_inicio.php';
-            include __DIR__ . '/admin_modulos/admin_diseno.php';
             include __DIR__ . '/admin_modulos/admin_mensajes.php';
             include __DIR__ . '/admin_modulos/admin_tienda.php';
             include __DIR__ . '/admin_modulos/admin_usuarios.php';
             include __DIR__ . '/admin_modulos/admin_accesos.php';
+            include __DIR__ . '/admin_modulos/admin_diseno.php';
         ?>
 
     </main>

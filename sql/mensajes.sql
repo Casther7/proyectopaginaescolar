@@ -14,4 +14,4 @@ CREATE TABLE mensajes (
 
 INSERT INTO mensajes (nombre, email, telefono, asunto, mensaje, estado) VALUES
 ('Juan Pérez', 'juan@example.com', '555-123-4567', 'Información sobre secundaria', 'Me gustaría obtener más información sobre las inscripciones para secundaria.', 'no_leido'),
-('Sandra García López', 'sagarlo15del2@gmail.com', '', 'secundaria', 'mas info', 'no_leido');
+('Sandra García López', 'sagarlo15del2@gmail.com', '987-656-785', 'secundaria', 'mas info', 'no_leido');
