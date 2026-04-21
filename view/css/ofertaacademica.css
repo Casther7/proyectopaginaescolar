@@ -127,7 +127,7 @@
    ========================================== */
 
 /* 1. El fondo oscuro que cubre toda la pantalla */
-.modal-flotante-oculto {
+.modal-flotante {
     position: fixed; /* Lo saca del flujo normal de la página */
     top: 0;
     left: 0;
@@ -148,7 +148,7 @@
 }
 
 /* 2. La clase que tu JavaScript le agrega para hacerlo aparecer */
-.modal-flotante-oculto.activo {
+.modal-flotante.activo {
     opacity: 1;
     visibility: visible;
 }
