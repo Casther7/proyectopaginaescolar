@@ -66,4 +66,5 @@ $noticias = NoticiaModel::mdlListarNoticias();
             
         </div>
     </div>
+    <script src="view/js/noticias.js"></script>
 </section>
