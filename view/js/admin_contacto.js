@@ -1,18 +1,25 @@
-$(document).on('click', '#btnGuardarContacto', function() {
+$(document).on('click', '#btnActualizarContacto', function(e) {
+    e.preventDefault(); // Evita cualquier recarga accidental
+
+    // Obtenemos los valores usando los IDs reales del PHP
     const datos = {
         action: 'actualizar',
-        telefono: $('#edit_con_tel').val(),
-        correo: $('#edit_con_correo').val(),
-        horario: $('#edit_con_horario').val(),
-        ubicacion: $('#edit_con_ubi').val()
+        telefono: $('#con_tel').val(),
+        correo: $('#con_correo').val(),
+        horario: $('#con_horario').val(),
+        ubicacion: $('#con_ubicacion').val()
     };
 
+    console.log("Enviando datos de contacto:", datos); // Para que revises en la consola (F12)
+
     $.post('ajax/ajax_contacto.php', datos, function(res) {
-        if(res === "ok") {
+        // Usamos trim() por si el PHP devuelve espacios en blanco accidentales
+        if(res.trim() === "ok") {
             alert("✅ Información actualizada correctamente");
             location.reload();
         } else {
-            alert("❌ Error al actualizar");
+            console.error("Respuesta del servidor:", res);
+            alert("❌ Error al actualizar. Revisa la consola.");
         }
     });
 });
