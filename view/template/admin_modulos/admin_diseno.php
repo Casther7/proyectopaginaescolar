@@ -291,7 +291,6 @@ function toggleInputBanner() {
         <!-- ==================== CONTACTO ==================== -->
         <div class="card form-card" style="margin-top: 25px;">
     <h3 class="form-section-title">📞 Información de Contacto Directo</h3>
-    <form id="formUpdateContacto">
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
             <div class="form-group">
                 <label>Teléfono de Atención</label>
@@ -314,5 +313,4 @@ function toggleInputBanner() {
         </div>
 
         <button type="button" id="btnActualizarContacto" class="btn-guardar" style="background:#16a085;">Actualizar Información</button>
-    </form>
 </div>

@@ -1,6 +1,7 @@
 <?php
 // Importamos el modelo de contacto para usar la función de actualización
-require_once "model/ContactoModel.php";
+require_once "../model/ContactoModel.php";
+require_once "../config/conexion.php";
 
 if(isset($_POST["action"]) && $_POST["action"] == "actualizar"){
 
