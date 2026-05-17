@@ -1,5 +1,6 @@
 <?php
-require_once "config/conexion.php";
+//ContantoModel.php
+require_once  __DIR__ ."/../config/conexion.php";
 
 class ContactoModel {
     // Obtener los datos actuales
@@ -9,16 +10,21 @@ class ContactoModel {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Actualizar los datos desde el panel
+    // Actualizar los datos desde el panel (incluyendo el mapa)
     public static function mdlActualizarContacto($datos) {
         $stmt = Conexion::conectar()->prepare("UPDATE contacto_info SET 
-            telefono = :tel, correo = :correo, ubicacion = :ubi, horario = :hor 
+            telefono = :tel, 
+            correo = :correo, 
+            ubicacion = :ubi, 
+            horario = :hor,
+            mapa_url = :mapa 
             WHERE id = 1");
         
         $stmt->bindParam(":tel", $datos["telefono"], PDO::PARAM_STR);
         $stmt->bindParam(":correo", $datos["correo"], PDO::PARAM_STR);
         $stmt->bindParam(":ubi", $datos["ubicacion"], PDO::PARAM_STR);
         $stmt->bindParam(":hor", $datos["horario"], PDO::PARAM_STR);
+        $stmt->bindParam(":mapa", $datos["mapa"], PDO::PARAM_STR);
 
         return ($stmt->execute()) ? "ok" : "error";
     }

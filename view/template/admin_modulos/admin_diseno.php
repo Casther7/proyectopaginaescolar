@@ -1,4 +1,5 @@
 <?php
+//admin_diseno.php
 // 1. Importar el modelo de contacto
 require_once "model/ContactoModel.php";
 
@@ -11,7 +12,8 @@ if(!$infoContacto){
         'telefono' => '',
         'correo' => '',
         'ubicacion' => '',
-        'horario' => ''
+        'horario' => '',
+        'mapa_url' => ''
     ];
 }
 ?>
@@ -26,7 +28,6 @@ if(!$infoContacto){
     
     <form action="#" method="POST" enctype="multipart/form-data">
 
-        <!-- ==================== BANNER ==================== -->
         <?php if ($__mostrarTodo || !empty($permisosVista['p_banner'])): ?>
 <div class="card form-card">
     <h3 class="form-section-title">🖼️ Banner Principal (Hero)</h3>
@@ -73,8 +74,6 @@ function toggleInputBanner() {
 </script>
 <?php endif; ?>
 
-        <!--=====================(Nosotros)===================== -->
-
         <?php if ($__mostrarTodo || !empty($permisosVista['p_nosotros'])): ?>
         <div class="card form-card" style="margin-top: 25px;">
             <h3 class="form-section-title">📖 Nuestros valores</h3>
@@ -100,8 +99,6 @@ function toggleInputBanner() {
         </div>
         <?php endif; ?>
 
-        <!--     ============= Estadisticas al lado de nosotros ====================-->
-
         <?php if ($__mostrarTodo || !empty($permisosVista['p_nosotros'])): ?>
         <div class="card form-card" style="margin-top: 25px;">
             <h3 class="form-section-title">📖 Sobre nosotros</h3>
@@ -116,75 +113,74 @@ function toggleInputBanner() {
 
             <div class="form-group" style="display:flex; gap:10px;">
                 <div style="flex:1;">
-                <label>Punto Lista 1 (🎓)</label>
-                <input type="text" id="texto_nosotros_item1" class="input-admin">
-                <button type="button" class="btn-guardar-info" data-slug="nosotros_item1" style="margin-top:5px; background:#2c3e50; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Guardar Pt. 1</button>
+                    <label>Punto Lista 1 (🎓)</label>
+                    <input type="text" id="texto_nosotros_item1" class="input-admin">
+                    <button type="button" class="btn-guardar-info" data-slug="nosotros_item1" style="margin-top:5px; background:#2c3e50; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Guardar Pt. 1</button>
+                </div>
+                <div style="flex:1;">
+                    <label>Punto Lista 2 (💻)</label>
+                    <input type="text" id="texto_nosotros_item2" class="input-admin">
+                    <button type="button" class="btn-guardar-info" data-slug="nosotros_item2" style="margin-top:5px; background:#2c3e50; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Guardar Pt. 2</button>
+                </div>
+                <div style="flex:1;">
+                    <label>Punto Lista 3 (🏛️)</label>
+                    <input type="text" id="texto_nosotros_item3" class="input-admin">
+                    <button type="button" class="btn-guardar-info" data-slug="nosotros_item3" style="margin-top:5px; background:#2c3e50; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Guardar Pt. 3</button>
+                </div>
             </div>
-            <div style="flex:1;">
-                <label>Punto Lista 2 (💻)</label>
-                <input type="text" id="texto_nosotros_item2" class="input-admin">
-                <button type="button" class="btn-guardar-info" data-slug="nosotros_item2" style="margin-top:5px; background:#2c3e50; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Guardar Pt. 2</button>
-            </div>
-            <div style="flex:1;">
-                <label>Punto Lista 3 (🏛️)</label>
-                <input type="text" id="texto_nosotros_item3" class="input-admin">
-                <button type="button" class="btn-guardar-info" data-slug="nosotros_item3" style="margin-top:5px; background:#2c3e50; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Guardar Pt. 3</button>
-            </div>
-        </div>
 
-        <div class="form-group" style="margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 20px;">
-            <label>Texto Inferior</label>
-            <textarea id="texto_nosotros_desc_bottom" class="input-admin" rows="2"></textarea>
-            <button type="button" class="btn-guardar-info" data-slug="nosotros_desc_bottom" style="margin-top:5px; background:#2c3e50; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Guardar Texto</button>
+            <div class="form-group" style="margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 20px;">
+                <label>Texto Inferior</label>
+                <textarea id="texto_nosotros_desc_bottom" class="input-admin" rows="2"></textarea>
+                <button type="button" class="btn-guardar-info" data-slug="nosotros_desc_bottom" style="margin-top:5px; background:#2c3e50; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Guardar Texto</button>
+            </div>
         </div>
         <?php endif; ?>   
     
 
-        <!-- ==================== INSTALACIONES ==================== -->
         <?php if ($__mostrarTodo || !empty($permisosVista['p_instalaciones'])): ?>
-            <div class="card form-card" style="margin-top: 25px;">
-    <h3 class="form-section-title">🏢 Instalaciones</h3>
-    
-    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-        
-        <div class="form-group" style="flex: 1; min-width: 250px;">
-            <label>Categoría (Sección)</label>
-            <select id="inst_seccion" class="input-admin">
-                <option value="laboratorios">Laboratorios</option>
-                <option value="deportes">Deportes</option>
-                <option value="biblioteca">Biblioteca</option>
-            </select>
+        <div class="card form-card" style="margin-top: 25px;">
+            <h3 class="form-section-title">🏢 Instalaciones</h3>
+            
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                
+                <div class="form-group" style="flex: 1; min-width: 250px;">
+                    <label>Categoría (Sección)</label>
+                    <select id="inst_seccion" class="input-admin">
+                        <option value="laboratorios">Laboratorios</option>
+                        <option value="deportes">Deportes</option>
+                        <option value="biblioteca">Biblioteca</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="flex: 1; min-width: 250px;">
+                    <label>Nombre del espacio</label>
+                    <input type="text" id="inst_titulo" class="input-admin" placeholder="Ej: Laboratorio de Redes">
+                </div>
+
+                <div class="form-group" style="width: 100%;">
+                    <label>Descripción</label>
+                    <textarea id="inst_subtitulo" class="input-admin" rows="2"></textarea>
+                </div>
+
+                <div class="form-group" style="width: 100%;">
+                    <label>Imagen</label>
+                    <input type="file" id="inst_foto" accept="image/*" class="input-admin">
+                </div>
+
+                <button type="button" onclick="guardarInstalacion()" class="btn-guardar" style="background: #2563eb;">
+                    🚀 Guardar en Instalaciones
+                </button>
+            </div>
         </div>
+        <?php endif; ?>
 
-        <div class="form-group" style="flex: 1; min-width: 250px;">
-            <label>Nombre del espacio</label>
-            <input type="text" id="inst_titulo" class="input-admin" placeholder="Ej: Laboratorio de Redes">
-        </div>
-
-        <div class="form-group" style="width: 100%;">
-            <label>Descripción</label>
-            <textarea id="inst_subtitulo" class="input-admin" rows="2"></textarea>
-        </div>
-
-        <div class="form-group" style="width: 100%;">
-            <label>Imagen</label>
-            <input type="file" id="inst_foto" accept="image/*" class="input-admin">
-        </div>
-
-        <button type="button" onclick="guardarInstalacion()" class="btn-guardar" style="background: #2563eb;">
-            🚀 Guardar en Instalaciones
-        </button>
-    </div>
-</div>
-<?php endif; ?>
-
-        <!-- ==================== OFERTA ==================== -->
         <?php if ($__mostrarTodo || !empty($permisosVista['p_oferta'])): ?>
         <div class="card form-card" style="margin-top: 25px;">
             <h3 class="form-section-title">🎓 Gestión de Oferta Académica</h3>
             <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 20px;">Registra los detalles de las carreras para que aparezcan en el slider y el modal.</p>
             
-            <form id="formNuevaOferta" enctype="multipart/form-data">
+            <div id="formNuevaOferta">
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
                     <div class="form-group">
                         <label>Nivel (Ej: Ingeniería, Licenciatura)</label>
@@ -240,79 +236,87 @@ function toggleInputBanner() {
                 </div>
 
                 <button type="button" id="btnGuardarOferta" class="btn-guardar" style="background:#2980b9; margin-top: 20px;">Publicar Carrera</button>
-            </form>
+            </div>
 
             <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
             <div id="listaOfertaAdmin"></div>
         </div>
         <?php endif; ?>
 
-        <!-- ==================== NOTICIAS ==================== -->
+        <?php if (isset($permisosVista) && $permisosVista['p_docentes'] == 1): ?>
         <div class="card form-card" style="margin-top: 25px;">
-    <h3 class="form-section-title">📰 Publicar Nueva Noticia</h3>
-    <form id="formNuevaNoticia" enctype="multipart/form-data">
-        <div class="form-group">
-            <label>Título de la Noticia</label>
-            <input type="text" name="not_titulo" id="not_titulo" class="input-admin" required>
-        </div>
-        <div style="display:flex; gap:15px;">
-            <div class="form-group" style="flex:1;">
-                <label>Categoría</label>
-                <select name="not_categoria" id="not_categoria" class="input-admin">
-                    <option value="Académico">Académico</option>
-                    <option value="Deportes">Deportes</option>
-                    <option value="Cultura">Cultura</option>
-                    <option value="Avisos">Avisos</option>
-                </select>
+            <h3 class="form-section-title">📰 Publicar Nueva Noticia</h3>
+            <div id="formNuevaNoticia">
+                <div class="form-group">
+                    <label>Título de la Noticia</label>
+                    <input type="text" name="not_titulo" id="not_titulo" class="input-admin" required>
+                </div>
+                <div style="display:flex; gap:15px;">
+                    <div class="form-group" style="flex:1;">
+                        <label>Categoría</label>
+                        <select name="not_categoria" id="not_categoria" class="input-admin">
+                            <option value="Académico">Académico</option>
+                            <option value="Deportes">Deportes</option>
+                            <option value="Cultura">Cultura</option>
+                            <option value="Avisos">Avisos</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label>Fecha del Evento</label>
+                        <input type="date" name="not_fecha" id="not_fecha" class="input-admin" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Imagen Portada</label>
+                    <input type="file" name="not_archivo" id="not_archivo" class="input-admin" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label>Contenido Completo</label>
+                    <textarea name="not_descripcion" id="not_descripcion" class="input-admin" rows="5" required></textarea>
+                </div>
+                <button type="button" id="btnGuardarNoticia" class="btn-guardar" style="background:#2ecc71;">Publicar Noticia</button>
             </div>
-            <div class="form-group" style="flex:1;">
-                <label>Fecha del Evento</label>
-                <input type="date" name="not_fecha" id="not_fecha" class="input-admin" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <label>Imagen Portada</label>
-            <input type="file" name="not_archivo" id="not_archivo" class="input-admin" accept="image/*" required>
-        </div>
-        <div class="form-group">
-            <label>Contenido Completo</label>
-            <textarea name="not_descripcion" id="not_descripcion" class="input-admin" rows="5" required></textarea>
-        </div>
-        <button type="button" id="btnGuardarNoticia" class="btn-guardar" style="background:#2ecc71;">Publicar Noticia</button>
-    </form>
 
-    <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
-    <h3 class="form-section-title">Lista de Noticias Publicadas</h3>
-    <div id="listaNoticiasAdmin" style="margin-top:15px;">
+            <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
+            <h3 class="form-section-title">Lista de Noticias Publicadas</h3>
+            <div id="listaNoticiasAdmin" style="margin-top:15px;"></div>
         </div>
+        <?php endif; ?>
+
+
+        <?php if (isset($permisosVista) && $permisosVista['p_contacto'] == 1): ?>
+        <div class="card form-card" style="margin-top: 25px;">
+            <h3 class="form-section-title">📞 Información de Contacto Directo</h3>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                <div class="form-group">
+                    <label>Teléfono de Atención</label>
+                    <input type="text" id="con_tel" class="input-admin" value="<?php echo $infoContacto['telefono']; ?>">
+                </div>
+                <div class="form-group">
+                    <label>Correo Institucional</label>
+                    <input type="email" id="con_correo" class="input-admin" value="<?php echo $infoContacto['correo']; ?>">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Horario (Ej: Lun-Vie 8am a 4pm)</label>
+                <input type="text" id="con_horario" class="input-admin" value="<?php echo $infoContacto['horario']; ?>">
+            </div>
+
+            <div class="form-group">
+                <label>Dirección Completa</label>
+                <textarea id="con_ubicacion" class="input-admin" rows="2"><?php echo $infoContacto['ubicacion']; ?></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Ubicación en Google Maps (Enlace Iframe)</label>
+                <input type="text" id="con_mapa" class="input-admin" value="<?php echo isset($infoContacto['mapa_url']) ? $infoContacto['mapa_url'] : ''; ?>" placeholder="Pega aquí el enlace del mapa">
+                <p style="font-size: 0.75rem; color: #64748b; margin-top: 5px;">Compartir > Incorporar mapa > Copia solo la URL dentro de src="..."</p>
+            </div>
+
+            <button type="button" id="btnActualizarContacto" class="btn-guardar" style="background:#16a085;">Actualizar Información</button>
+        </div>
+        <?php endif; ?>
 </div>
-
-
-        <!-- ==================== CONTACTO ==================== -->
-        <div class="card form-card" style="margin-top: 25px;">
-    <h3 class="form-section-title">📞 Información de Contacto Directo</h3>
-    <form id="formUpdateContacto">
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
-            <div class="form-group">
-                <label>Teléfono de Atención</label>
-                <input type="text" id="con_tel" class="input-admin" value="<?php echo $infoContacto['telefono']; ?>">
-            </div>
-            <div class="form-group">
-                <label>Correo Institucional</label>
-                <input type="email" id="con_correo" class="input-admin" value="<?php echo $infoContacto['correo']; ?>">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Horario (Ej: Lun-Vie 8am a 4pm)</label>
-            <input type="text" id="con_horario" class="input-admin" value="<?php echo $infoContacto['horario']; ?>">
-        </div>
-
-        <div class="form-group">
-            <label>Dirección Completa</label>
-            <textarea id="con_ubicacion" class="input-admin" rows="2"><?php echo $infoContacto['ubicacion']; ?></textarea>
-        </div>
-
-        <button type="button" id="btnActualizarContacto" class="btn-guardar" style="background:#16a085;">Actualizar Información</button>
     </form>
 </div>
