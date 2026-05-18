@@ -1,4 +1,5 @@
 <?php
+//panel-usuario.php
 if (session_status() == PHP_SESSION_NONE) { session_start(); }
 
 if (!isset($_SESSION['usuarioLogueado']) || $_SESSION['usuarioLogueado'] !== true) {
@@ -19,10 +20,12 @@ $permisosSesion = isset($_SESSION['usuarioPermisos']) && is_array($_SESSION['usu
 
 // Refrescar permisos en cada carga evita que el usuario tenga que cerrar sesion
 // cuando el admin cambia accesos.
-$permisos = PermisosModel::mdlObtenerPermisos((int)($_SESSION['usuarioId'] ?? 0));
-if (!is_array($permisos)) {
-    $permisos = $permisosSesion;
-}
+$permisosBD = PermisosModel::mdlObtenerPermisos((int)($_SESSION['usuarioId'] ?? 0));
+
+// Si la BD responde, usamos eso. Si hay error de conexión, usamos la sesión como respaldo.
+$permisos = ($permisosBD !== null) ? $permisosBD : $permisosSesion;
+
+// Actualizamos la sesión para que el resto del archivo use los datos frescos
 $_SESSION['usuarioPermisos'] = $permisos;
 
 // Helper

@@ -11,7 +11,8 @@ if(!$info) {
         'telefono' => '951 517 0444',
         'correo' => 'informes@tuinstitucion.edu.mx',
         'ubicacion' => 'Av. Universidad S/N, Ex-Hacienda de Cinco Señores, C.P. 68120, Oaxaca de Juárez, Oax.',
-        'horario' => 'Lunes a Viernes: 08:00 AM - 4:00 PM'
+        'horario' => 'Lunes a Viernes: 08:00 AM - 4:00 PM',
+        'mapa_url' => '' // Aseguramos que el índice exista
     ];
 }
 ?>
@@ -58,7 +59,7 @@ if(!$info) {
                         </div>
                         <div class="contacto-input-group ancho-completo">
                             <label>Mensaje</label>
-                            <textarea name="mensaje" class="contacto-textarea" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                            <input type="text" name="mensaje" class="contacto-input" placeholder="Escribe tu mensaje aquí..." required>
                         </div>
                     </div>
                     <div class="contacto-btn-wrapper">
@@ -104,10 +105,26 @@ if(!$info) {
                     </li>
                 </ul>
 
-                <div class="contacto-mapa-caja">
-                    <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=600" alt="Mapa">
+                <div class="contacto-mapa-caja" style="height: 250px; overflow: hidden; border-radius: 8px;">
+                    <?php if(!empty($info['mapa_url'])): ?>
+                        <iframe 
+                            src="<?php echo $info['mapa_url']; ?>" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    <?php else: ?>
+                        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=600" alt="Mapa" style="width:100%; height:100%; object-fit:cover;">
+                    <?php endif; ?>
                 </div>
-                <a href="#" class="contacto-link-mapa">Ver en Google Maps</a>
+
+                <a href="https://www.google.com/maps/search/?api=1&query=<?php echo urlencode($info['ubicacion']); ?>" 
+                   target="_blank" 
+                   class="contacto-link-mapa">
+                   Ver en Google Maps
+                </a>
             </div>
 
         </div>

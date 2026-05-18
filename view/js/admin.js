@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-
+//admin.js
     // --- 1. PREVISUALIZACIÓN DE MEDIOS (BANNER Y FOTO DE PERFIL) ---
     function activarPreview(idInput, isVideo = false) {
         const input = document.getElementById(idInput);
@@ -98,7 +98,7 @@ function guardarInstalacion() {
     formData.append('subtitulo', elSubtitulo.value);
     formData.append('archivo', elFoto.files[0]);
 
-    fetch('/proyectopaginaescolar/ajax/ajax_banners.php', {
+    fetch('/paginaescolar/ajax/ajax_instalaciones.php', {
         method: 'POST',
         body: formData
     })

@@ -1,19 +1,20 @@
 $(document).on('click', '#btnActualizarContacto', function(e) {
-    e.preventDefault(); // Evita cualquier recarga accidental
+    e.preventDefault(); 
 
-    // Obtenemos los valores usando los IDs reales del PHP
+    // Obtenemos los valores, incluyendo el nuevo campo del mapa
     const datos = {
         action: 'actualizar',
         telefono: $('#con_tel').val(),
         correo: $('#con_correo').val(),
         horario: $('#con_horario').val(),
-        ubicacion: $('#con_ubicacion').val()
+        ubicacion: $('#con_ubicacion').val(),
+        mapa: $('#con_mapa').val() // <-- NUEVO: Asegúrate que el input tenga id="con_mapa"
     };
 
-    console.log("Enviando datos de contacto:", datos); // Para que revises en la consola (F12)
+    console.log("Enviando datos de contacto:", datos);
 
     $.post('ajax/ajax_contacto.php', datos, function(res) {
-        // Usamos trim() por si el PHP devuelve espacios en blanco accidentales
+        // Usamos trim() para limpiar la respuesta
         if(res.trim() === "ok") {
             alert("✅ Información actualizada correctamente");
             location.reload();

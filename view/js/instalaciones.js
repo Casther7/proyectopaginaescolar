@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             modalInst.classList.add('activo');
 
             // 3. Traer datos reales de la BD
-            fetch(`ajax/ajax_banners.php?action=listar&seccion=${categoria}`)
+            fetch(`ajax/ajax_instalaciones.php?action=listar&seccion=${categoria}`)
                 .then(res => res.json())
                 .then(data => {
                     mGaleria.innerHTML = ''; // Limpiar el "Cargando"
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             
                             // Usamos la ruta tal cual viene de la BD (view/img_banners/...)
                             div.innerHTML = `
-                                <img src="${item.ruta_archivo}" class="sub-inst-img" onerror="this.src='view/img/placeholder.jpg'">
+                                <img src="${item.ruta_archivo}" class="sub-inst-img" onerror="this.src='view/img_instalaciones/placeholder.jpg'">
                                 <div class="sub-inst-info">
                                     <h4>${item.titulo}</h4>
                                     <p>${item.subtitulo}</p>

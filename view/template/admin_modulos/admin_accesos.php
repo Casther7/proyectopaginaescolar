@@ -1,4 +1,5 @@
 <?php
+//admin_accesos.php
 require_once __DIR__ . '/../../../model/UsuarioModel.php';
 require_once __DIR__ . '/../../../model/PermisosModel.php';
 
@@ -72,7 +73,7 @@ function chk($permisos, $campo) {
                         <label class="switch"><input type="checkbox" name="p_oferta" <?php echo chk($permisosActuales,'p_oferta'); ?>><span class="slider"></span></label>
                     </div>
                     <div class="permiso-row">
-                        <span class="permiso-label">Nuestro Equipo Docente</span>
+                        <span class="permiso-label">Publicar Nueva Noticia</span>
                         <label class="switch"><input type="checkbox" name="p_docentes" <?php echo chk($permisosActuales,'p_docentes'); ?>><span class="slider"></span></label>
                     </div>
                     <div class="permiso-row">
@@ -111,31 +112,30 @@ function chk($permisos, $campo) {
 </div>
 
 <script>
-var permisosCache = {};
-var camposPermisos = ['p_banner','p_nosotros','p_oferta','p_docentes','p_instalaciones','p_contacto','p_mensajes','p_tienda','p_usuarios_accesos'];
+    var camposPermisos = ['p_banner','p_nosotros','p_oferta','p_docentes','p_instalaciones','p_contacto','p_mensajes','p_tienda','p_usuarios_accesos'];
 
-function cambiarUsuarioAccesos(userId) {
-    document.getElementById('accesos_usuario_id').value = userId;
+    function cambiarUsuarioAccesos(userId) {
+        document.getElementById('accesos_usuario_id').value = userId;
 
-    if (permisosCache[userId]) {
-        aplicarPermisos(permisosCache[userId]);
-        return;
+        /***if (permisosCache[userId]) {
+            aplicarPermisos(permisosCache[userId]);
+            return;
+        }***/
+
+        fetch('ajax/ajax_accesos.php?action=get&id=' + userId)
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data.success) {
+                    //permisosCache[userId] = data.permisos;
+                    aplicarPermisos(data.permisos);
+                }
+            });
     }
 
-    fetch('ajax/ajax_accesos.php?action=get&id=' + userId)
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-            if (data.success) {
-                permisosCache[userId] = data.permisos;
-                aplicarPermisos(data.permisos);
-            }
+    function aplicarPermisos(permisos) {
+        camposPermisos.forEach(function(campo) {
+            var input = document.querySelector('#form-accesos input[name="' + campo + '"]');
+            if (input) input.checked = (permisos[campo] == 1);
         });
-}
-
-function aplicarPermisos(permisos) {
-    camposPermisos.forEach(function(campo) {
-        var input = document.querySelector('#form-accesos input[name="' + campo + '"]');
-        if (input) input.checked = (permisos[campo] == 1);
-    });
-}
+    }
 </script>
